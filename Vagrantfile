@@ -17,5 +17,6 @@ Vagrant.configure(2) do |config|
       		vb.memory = "2048"
     	  	vb.name = "php"
   	end
+    php.vm.provision :shell, path: "./provision.sh"
 end
 end
