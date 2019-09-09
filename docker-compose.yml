@@ -1,0 +1,42 @@
+  
+version: "3" 
+services:
+  # Web service layer
+  apache:
+    image: httpd
+    volumes:
+      - "./app:/var/www/html"
+      - "./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf"
+    ports:
+      - "80:80"
+    links:
+      - php
+
+  # Application service layer
+  php:
+    build:
+      context: ./php
+    volumes:
+      - "./app:/var/www/html"
+    ports:
+      - "9000:9000"
+    links:
+      - postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASS=123456
+  
+  # Data persistence service layer
+  postgres:
+    image: postgres
+    volumes:
+      - "db_data:/var/lib/postgresql/data"
+      - "./postgres/initial_data:/docker-entrypoint-initdb.d"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+
+volumes:
+  db_data:
