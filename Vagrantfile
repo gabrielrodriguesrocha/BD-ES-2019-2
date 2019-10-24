@@ -19,4 +19,3 @@ Vagrant.configure(2) do |config|
   	end
 	php.vm.provision :shell, path: "./provision.sh"
 end
-end
