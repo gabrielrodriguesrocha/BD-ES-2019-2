@@ -18,4 +18,5 @@ Vagrant.configure(2) do |config|
     	  	vb.name = "php"
   	end
 	php.vm.provision :shell, path: "./provision.sh"
+	end
 end
