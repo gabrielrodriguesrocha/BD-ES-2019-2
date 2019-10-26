@@ -1,0 +1,24 @@
+{
+  "name": "BD-ES-2019-2",
+  "version": "1.0.0",
+  "description": "## Como executar",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielrodriguesrocha/BD-ES-2019-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrielrodriguesrocha/BD-ES-2019-2/issues"
+  },
+  "homepage": "https://github.com/gabrielrodriguesrocha/BD-ES-2019-2#readme",
+  "devDependencies": {
+    "codeceptjs": "^2.3.5",
+    "puppeteer": "^2.0.0"
+  }
+}
