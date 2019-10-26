@@ -13,3 +13,4 @@ Caso queira desenvolver de forma totalmente virtualizada, há um `Vagrantfile` q
 * Nova feature? Novo branch:
     * `git checkout <branch_name> || git checkout -b <branch_name>`
 * Com ORM mas sem PDO: o mais simples possível;
+* Testes: utilizar `codeceptjs`;
