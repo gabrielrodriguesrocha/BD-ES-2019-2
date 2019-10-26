@@ -23,9 +23,9 @@ services:
     links:
       - postgres
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASS=123456
-  
+      POSTGRES_USER: postgres
+      POSTGRES_PASS: 123456
+
   # Data persistence service layer
   postgres:
     image: postgres
