@@ -1,18 +1,11 @@
 <?php
 
-include('../util/checkAccess.php');
+session_start();
 
-function MyAutoload($className) {
-    $extension =  spl_autoload_extensions();
-    require_once ('../class/' . $className . $extension);
-}
 
-spl_autoload_extensions('.class.php'); // quais extensões iremos considerar
-spl_autoload_register('MyAutoload');
+include('../util/splAndState.php');
 
-$conn = Connection::getInstance();
-
-checkAccess(true);
+$state->checkAccess(true);
 ?>
 
 

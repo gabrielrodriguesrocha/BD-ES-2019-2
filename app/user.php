@@ -1,7 +1,9 @@
 <?php
 
-include('util/checkAccess.php');
+session_start();
 
-checkAccess(false);
+include('util/splAndState.php');
+
+$state->checkAccess(false);
 
 ?>

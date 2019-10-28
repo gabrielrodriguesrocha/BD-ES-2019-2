@@ -19,6 +19,7 @@
   "homepage": "https://github.com/gabrielrodriguesrocha/BD-ES-2019-2#readme",
   "devDependencies": {
     "codeceptjs": "^2.3.5",
+    "faker": "^4.1.0",
     "puppeteer": "^2.0.0"
   }
 }

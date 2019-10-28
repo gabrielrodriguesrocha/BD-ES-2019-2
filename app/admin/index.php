@@ -1,8 +1,10 @@
 <?php
 
-include('../util/checkAccess.php');
+session_start();
 
-checkAccess(true);
+include('../util/splAndState.php');
+
+$state->checkAccess(true);
 
 ?>
 
@@ -27,6 +29,5 @@ checkAccess(true);
         <li><a href="monthly_report.php">Relatório mensal</a></li>
         <li><a href="periodic_report.php">Relatório periódico</a></li>
     </ul>
-
 </body>
 </html>

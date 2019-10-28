@@ -9,7 +9,8 @@ Vagrant.configure(2) do |config|
   config.vm.define "php" do |php|
 
  	php.vm.box = "ubuntu/bionic64"
- 	php.vm.network "forwarded_port", guest: 80, host: 8000
+ 	php.vm.network "forwarded_port", guest: 80, host: 80
+	php.vm.network "forwarded_port", guest: 5432, host: 5432
   	php.vm.network "public_network"
     php.vm.network "private_network", ip: "192.168.50.2"
   	php.vm.hostname = "php"

@@ -2,6 +2,7 @@
 
 // Singleton pattern
 class Connection {
+    private static $conn;
     private static $pdo;
     private static $loginStmt;
     private static $dsn;
@@ -17,14 +18,15 @@ class Connection {
                 $dsn = "pgsql:host=postgres;dbname=exams;user=$dbuser;password=$dbpass";
                 self::$pdo = new PDO($dsn);
                 self::$loginStmt = self::$pdo->prepare(self::$loginSql);
+                self::$conn = new Connection();
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
         }
-        return self::$pdo;
+        return self::$conn;
     }
 
-    public static function attemptLogin($username) {
+    public static function fetchCredentials($username) {
         self::$loginStmt->execute([$username]);
         if (self::$loginStmt->rowCount() != 1)
             return FALSE;

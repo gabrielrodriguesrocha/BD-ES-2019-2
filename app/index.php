@@ -2,20 +2,23 @@
 
 session_start();
 
-function MyAutoload($className) {
-    $extension =  spl_autoload_extensions();
-    require_once ('class/' . $className . $extension);
+include('util/splAndState.php');
+
+if (isset($_SESSION['employee'])) {
+    if ($_SESSION['employee'])
+        header('location:/admin/');
+    else
+        header('location:user.php');
 }
-
-spl_autoload_extensions('.class.php'); // quais extensões iremos considerar
-spl_autoload_register('MyAutoload');
-
-$conn = Connection::getInstance();
 
 $loginError = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // The request is using the POST method
+    $username = isset($_POST['username']) ? addslashes(trim($_POST['username'])) : FALSE;
+    $password = isset($_POST['password']) ? trim($_POST['password']) : FALSE;
+    $loginError = $state->attemptLogin($username, $password);
+    /*
     $username = isset($_POST['username']) ? addslashes(trim($_POST['username'])) : FALSE;
     $password = isset($_POST['password']) ? trim($_POST['password']) : FALSE;
 
@@ -40,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header('location:user.php');
         }
     }
+    */
 }
 ?>
 
@@ -63,7 +67,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div style="color: red"><?php echo $loginError; ?></div>
     </fieldset>
     </form>
-    <?php echo $_SESSION['username'];?>
-    <?php echo $_SESSION['password'];?>
 </body>
 </html>
