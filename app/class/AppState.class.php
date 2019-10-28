@@ -4,6 +4,7 @@
 class AppState {
     private static $state;
     private static $conn;
+    private static $userRepository;
 
     private function __construct() {}
 
@@ -12,6 +13,7 @@ class AppState {
             try {
                 self::$state = new AppState();
                 self::$conn = Connection::getInstance();
+                self::$userRepository = UserRepository::getInstance();
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
@@ -26,7 +28,7 @@ class AppState {
         }
         else {
             $pHash = hash('sha256', $password);
-            $record = self::$conn->fetchCredentials($username, $pHash);
+            $record = self::$userRepository->getByUsername($username);
             if (!$record ||
                 !($record['username'] === $username) ||
                 !($record['password'] === $pHash)) { // Wrong user or pass
