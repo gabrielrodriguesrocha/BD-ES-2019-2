@@ -1,8 +1,8 @@
-CREATE DATABASE labd
+/*CREATE DATABASE labd
     WITH 
     OWNER = postgres
     ENCODING = 'UTF8'
-    CONNECTION LIMIT = -1;
+    CONNECTION LIMIT = -1;*/
 
 CREATE TABLE Paciente(
 	username varchar(30) PRIMARY KEY,
