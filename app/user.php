@@ -6,6 +6,10 @@ include('util/splAndState.php');
 
 $state->checkAccess(false);
 
+$procedimentoRepository = ProcedimentoRepository::getInstance();
+
+$userProcs = $procedimentoRepository->getByUsername($_SESSION['username'])
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +23,24 @@ $state->checkAccess(false);
 <body>
     <h4>Meus exames</h4>
     <table>
-    
-    </table>
+  <thead>
+    <tr>
+      <th>Protocolo</th>
+      <th>Data/Hora</th>
+      <th>Local</th>
+      <th>Funcionário resp.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach($userProcs as &$proc): ?>
+    <tr>
+        <td><?php echo $proc->getProtocolo(); ?></td>
+        <td><?php echo $proc->getDataHora()->format('Y-m-d H:i:s'); ?></td>
+        <td><?php echo $proc->getLocal(); ?></td>
+        <td><?php echo $proc->getFuncionario()->getNome(); ?></td>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
 </body>
 </html>

@@ -21,7 +21,9 @@ $state->checkAccess(true);
     <h4>Registros:</h4>
     <ul>
         <li><a href="exam.php">Exames</a></li>
+        <li><a href="employee.php">Funcionários</a></li>
         <li><a href="patient.php">Pacientes</a></li>
+        <li><a href="procedure.php">Procedimentos</a></li>
     </ul>
 
     <h4>Relatórios:</h4>
