@@ -5,11 +5,11 @@
     CONNECTION LIMIT = -1;*/
 
 CREATE TABLE Paciente(
-   username varchar(30) PRIMARY KEY,
-   nome VARCHAR (50)  NOT NULL,
-   password VARCHAR (30) NOT NULL,
-   cpf VARCHAR (12) UNIQUE,
-   endereco varchar (100) NULL,
+	username varchar(30) PRIMARY KEY,
+	nome VARCHAR (50)  NOT NULL,
+	password VARCHAR (30) NOT NULL,
+	cpf VARCHAR (12) UNIQUE,
+	endereco varchar (100) NULL,
 	nascimento date not null,
 	sexo varchar (9) null,
 	email1 varchar (50) not null,
@@ -18,7 +18,6 @@ CREATE TABLE Paciente(
 	telefone2 varchar (12) null,
 	passaporte VARCHAR (10) UNIQUE
 );
-
 CREATE TABLE Procedimento(
     protocolo varchar(30) PRIMARY KEY,
 	paciente varchar (30) not null references paciente(username),
@@ -26,7 +25,6 @@ CREATE TABLE Procedimento(
 	local varchar (50) not null,
 	resultado varchar (500) null
 );
-
 CREATE TABLE Funcionario(
 	username varchar (30) not null PRIMARY KEY,
 	cargo  varchar (30) not null,
@@ -35,30 +33,25 @@ CREATE TABLE Funcionario(
 	telefone1 varchar (12) not null,
 	telefone2 varchar (12) null
 );
-
 CREATE TABLE FuncionarioProcedimento(
 	funcionario varchar (30) references funcionario(username),
 	procedimento varchar (30) references procedimento(protocolo),
 	Primary Key(funcionario,procedimento)
 );
-
 CREATE TABLE Exame(
 	nome varchar (60) not null PRIMARY KEY,
 	valor money not null
 );
-
 CREATE TABLE Competencias(
 	competencia varchar(100) not null,
 	exame varchar (60) not null references Exame(nome),
 	Primary Key(competencia,exame)
 );
-
 CREATE TABLE Restricoes(
 	restricao varchar(200) not null,
 	exame varchar (60) not null references Exame(nome),
 	Primary Key(restricao,exame)
 );
-
 CREATE TABLE ProcedimentoExame(
 	procedimento varchar(30) not null references Procedimento(protocolo),
 	exame varchar (60) not null references Exame(nome),
