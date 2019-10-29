@@ -34,7 +34,7 @@ $userProcs = $procedimentoRepository->getByUsername($_SESSION['username'])
   <tbody>
     <?php foreach($userProcs as &$proc): ?>
     <tr>
-        <td><?php echo $proc->getProtocolo(); ?></td>
+        <td><a href="<?php echo "user_procedure.php?protocolo=".$proc->getProtocolo(); ?>"><?php echo $proc->getProtocolo(); ?></a></td>
         <td><?php echo $proc->getDataHora()->format('Y-m-d H:i:s'); ?></td>
         <td><?php echo $proc->getLocal(); ?></td>
         <td><?php echo $proc->getFuncionario()->getNome(); ?></td>

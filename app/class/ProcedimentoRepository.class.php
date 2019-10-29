@@ -27,11 +27,17 @@ class ProcedimentoRepository {
             $mockProcedimento1 = new Procedimento(123, new DateTime(), 'Sorocaba', $paciente, array($exame), $funcionario);
             return array($mockProcedimento1);
         }
-        self::$loginStmt->execute([$username]);
-        if (self::$loginStmt->rowCount() != 1)
-            return FALSE;
-        else
-            return self::$loginStmt->fetch();
+    }
+
+    public static function getByProtocolo($protocolo) {
+        // Mock code
+        if (empty($procedimentoSql)) {
+            $paciente = new Paciente('user@site.com', 'João da Silva', '12345', '512.291.247-56', 'R. dos Bobos, 123', '11-09-1975', 'Masculino', 'user@site.com', null, null);
+            $exame = new Exame('HCT', 0.5, null, null);
+            $funcionario = new Funcionario('admin@site.com', 'enfermeiro', 'José da Silva', '12345', '(326) 341-5663', '(521) 976-9767');
+            $mockProcedimento1 = new Procedimento(123, new DateTime(), 'Sorocaba', $paciente, array($exame), $funcionario);
+            return $mockProcedimento1;
+        }
     }
 }
 ?>
