@@ -23,6 +23,18 @@ INSERT INTO paciente VALUES
 INSERT INTO paciente VALUES
     ('bell','isabelle ablas','MackejadaEBreja','44267854869','rua guaipa 1583','1997-07-12','Feminino','isabelle@gmail.com',null,'11998457389','11992360872',null);
 
+insert into funcionario values
+	('rocha','Dono','Gabriel Rodrigues','Breja','11996234359',null);
+insert into funcionario values
+	('gabriel','Gerente','Gabriel Peres','Senha','1199627867',null);
+insert into funcionario values
+	('shiko','Diretor','Henrique Shinki','tropasliberadas','11996245439',null);
+insert into funcionario values
+	('verinha','Analista Junior','Nicolas','LevantarPeso','11996238987',null);
+insert into funcionario values
+	('pablooo','Recepcionista','Pablo Laranjo','22pablitos','15998756754',null);
+insert into funcionario values
+	('sujeira','Analista Senior','Lucas Occaso','SuLu95','11955621877',null);
 
 
 
