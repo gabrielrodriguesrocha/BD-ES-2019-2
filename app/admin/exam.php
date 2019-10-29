@@ -2,11 +2,12 @@
 
 session_start();
 
-include('util/splAndState.php');
 
-$state->checkAccess(false);
+include('../util/splAndState.php');
 
+$state->checkAccess(true);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,10 +15,11 @@ $state->checkAccess(false);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Meus exames</title>
+    <title>Exames</title>
 </head>
 <body>
-    <h4>Meus exames</h4>
+    <?php include 'template/header.php' ?>
+    <h4>Exames</h4>
     <table>
     
     </table>

@@ -1,17 +1,20 @@
 <?php
-$dbuser = $_ENV['POSTGRES_USER'];
-$dbpass = $_ENV['POSTGRES_PASS'];
 
 // Singleton pattern
 class Connection {
     private static $pdo;
+    private static $dsn;
 
     private function __construct() {}
 
     public static function getInstance(){
         if (!isset(self::$pdo)) {
             try {
-                self::$pdo = new PDO("pgsql:host=postgres;dbname=exams", $dbuser, $dbpass);
+                $dbuser = $_ENV['POSTGRES_USER'];
+                $dbpass = $_ENV['POSTGRES_PASS'];
+                $db = $_ENV['POSTGRES_DB'];
+                $dsn = "pgsql:host=postgres;dbname=$db;user=$dbuser;password=$dbpass";
+                self::$pdo = new PDO($dsn);
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }

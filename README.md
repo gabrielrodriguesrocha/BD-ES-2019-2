@@ -9,8 +9,7 @@ Caso queira desenvolver de forma totalmente virtualizada, há um `Vagrantfile` q
 
 ## Padrões de desenvolvimento
 
-* Não utilizar CSS: [Design brutalista](https://brutalist-web.design/);
+* CSS mínimo: [Design brutalista](https://brutalist-web.design/);
 * Nova feature? Novo branch:
     * `git checkout <branch_name> || git checkout -b <branch_name>`
-* Com ORM mas sem PDO: o mais simples possível;
-* Testes: utilizar `codeceptjs`;
+* Com ORM mas sem PDO: o mais simples possível;* Testes: utilizar `codeceptjs`;
