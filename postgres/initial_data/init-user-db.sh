@@ -2,13 +2,10 @@
 set -e
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-	CREATE DATABASE exams;
 	CREATE SCHEMA internal;
-    	AUTHORIZATION postgres;
 	-- Table: internal.users
-
 	-- DROP TABLE internal.users;
-	
+
 	CREATE TABLE internal.users
 	(
 	    username character varying(25) COLLATE pg_catalog."default" NOT NULL,
@@ -20,7 +17,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	    OIDS = FALSE
 	)
 	TABLESPACE pg_default;
-	
+
 	ALTER TABLE internal.users
 	    OWNER to postgres;
 

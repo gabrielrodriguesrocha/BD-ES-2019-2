@@ -12,7 +12,8 @@ class Connection {
             try {
                 $dbuser = $_ENV['POSTGRES_USER'];
                 $dbpass = $_ENV['POSTGRES_PASS'];
-                $dsn = "pgsql:host=postgres;dbname=exams;user=$dbuser;password=$dbpass";
+                $db = $_ENV['POSTGRES_DB'];
+                $dsn = "pgsql:host=postgres;dbname=$db;user=$dbuser;password=$dbpass";
                 self::$pdo = new PDO($dsn);
             } catch(PDOException $e) {
                 echo $e->getMessage();
