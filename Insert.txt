@@ -1,0 +1,28 @@
+INSERT INTO paciente VALUES
+    ('drauzio','Gabriel Peres','AargonBestJungleBR','44332224578','rua paulo franco 142','1998-06-01','Masculino','gabriel@gmail.com',null,'119987657543',null,null);
+INSERT INTO paciente VALUES
+    ('leozin','Leonardo Martinhos','Macinha','46786435797','avenida armando pannuzio 1893 bloco 6 402','1997-12-02','Masculino','leonardo@gmail.com',null,'11997545432',null,null);
+INSERT INTO paciente VALUES
+    ('hortencia','Giovanni Alvarenga','AmoEla','44345432456','rua dos carajas','1998-06-01','Masculino','giovanni@gmail.com',null,'11998654345',null,null);
+INSERT INTO paciente VALUES
+    ('choko','Rodrigo Kinchoko','Gnaaaar','33765416289','rua da cor nos 142','1994-03-02','Masculino','rodrigo@gmail.com','rodrigo@gmail.com','11997656382','11997656383',null);
+INSERT INTO paciente VALUES
+    ('eleven','Pedro Coelho','GadoMaster','44368372630','avenida armando pannuzio 1893 bloco 8 202','1998-07-10','Masculino','pedro@gmail.com',null,'119987657543',null,'A4505694');
+INSERT INTO paciente VALUES
+    ('ryze','Bruno Rizzi','GodOfTFT','46784565797','rua armando pannuzio 1435 ap 42','1997-11-11','Masculino','bruno@gmail.com',null,'11997545432',null,'A854934');
+INSERT INTO paciente VALUES
+    ('mormaco','Bruno Baradel','XenonCarrosMotos','44332227388','avenida chacara chambra 1001','1998-06-010','Masculino','brunob@gmail.com','brunobaradel@gmail.com','11998798943',null,null);
+INSERT INTO paciente VALUES
+    ('hskodama','Henrique Shinki','BestJungleNA','46786439870','rua dos formandos 122','1997-02-22','Masculino','henrique@gmail.com',null,'11997545332','11997555552','A9898345');
+INSERT INTO paciente VALUES
+    ('highelo','Giovanna Albuquerque','AmoODrone','4138392456','avenida armando pannuzio 221','1997-06-08','Feminino','giovanna@gmail.com','gigatinha32@gmail.com','119987696943','11998765468',null);
+INSERT INTO paciente VALUES
+    ('toyquedo','Guilherme Gonçalves','MCHoje',null,'rua das capivaras 45','1996-10-04','Masculino','brinquedo@gmail.com','toy@gmail.com','11998563578','11990909769','A9054384');
+INSERT INTO paciente VALUES
+    ('cosi','Guilherme Cosimato','MetodoDeCosimato','44354323445','rua papa luiz 34','1998-02-20','Masculino','guilherme@gmail.com',null,'11998654399',null,null);
+INSERT INTO paciente VALUES
+    ('bell','isabelle ablas','MackejadaEBreja','44267854869','rua guaipa 1583','1997-07-12','Feminino','isabelle@gmail.com',null,'11998457389','11992360872',null);
+
+
+
+
