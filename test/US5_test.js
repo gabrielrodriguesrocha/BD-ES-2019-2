@@ -13,7 +13,7 @@ Scenario('AT1.1 - Verificar acesso incorreto à interface administrativa', (I) =
     I.see('Usuário ou senha incorretos');
 });
 
-Scenario('AT1.1 - Verificar acesso incorreto à interface administrativa', (I) => {
+Scenario('AT1.2 - Verificar acesso incorreto à interface administrativa', (I) => {
     //pause();
     I.amOnPage('/index.php');
     I.see('Login');

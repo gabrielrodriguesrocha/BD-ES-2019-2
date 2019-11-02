@@ -55,12 +55,10 @@ class AppState {
     }
 
     function checkAccess($employee) {
-        $employeeRestriction = $employee ? $_SESSION['employee'] === true : true;
         $result = (isset($_SESSION['username']) &&
-                   isset($_SESSION['password']) &&
-                   $employeeRestriction);
-                
-        if (!$result && $employee)
+                   isset($_SESSION['password']));
+
+        if (!$result)
         {
             if ($employee)
                 header("location: ../index.php");

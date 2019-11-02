@@ -22,4 +22,5 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	    OWNER to postgres;
 
 	INSERT INTO internal.users VALUES ('admin@site.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', true);
+	INSERT INTO internal.users VALUES ('user@site.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', false);
 EOSQL
