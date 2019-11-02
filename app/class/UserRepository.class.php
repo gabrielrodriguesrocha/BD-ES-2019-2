@@ -23,7 +23,7 @@ class UserRepository {
         if (self::$loginStmt->rowCount() != 1)
             return FALSE;
         else
-        return self::$loginStmt->fetch();
+            return self::$loginStmt->fetch();
     }
 }
 ?>

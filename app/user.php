@@ -8,7 +8,7 @@ $state->checkAccess(false);
 
 $procedimentoRepository = ProcedimentoRepository::getInstance();
 
-$userProcs = $procedimentoRepository->getByUsername($_SESSION['username'])
+$userProcs = $procedimentoRepository->getByUsername($_SESSION['username']);
 
 ?>
 

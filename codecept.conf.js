@@ -33,7 +33,7 @@ exports.config = {
           },
           check: (I) => {
              I.amOnPage('/user.php');
-             I.see('User', '.navbar');
+             I.see('Meus exames');
           },
         },
         admin: {

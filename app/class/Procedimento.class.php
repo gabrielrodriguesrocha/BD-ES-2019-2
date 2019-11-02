@@ -6,17 +6,24 @@ class Procedimento {
     private $local;
     private $paciente;
     private $exames;
-    private $funcionario;
+	private $funcionario;
+	private $valorTotal;
 
-    function __construct($protocolo, $dataHora, $local, $paciente, $exames, $funcionario) {
+    function __construct($protocolo, $dataHora, $local, $paciente, $exames, $funcionario, $valorTotal = 0) {
         $this->protocolo = $protocolo;
         $this->dataHora = $dataHora;
         $this->local = $local;
         $this->paciente = $paciente;
         $this->exames = $exames;
-        $this->funcionario = $funcionario;
+		$this->funcionario = $funcionario;
+		$this->resultado = $resultado;
+		if (!$valorTotal) {
+			foreach ($exames as &$exame) {
+				$this->valorTotal += $exame->getValor();
+			}
+		}
     }
-    
+
     public function getProtocolo(){
 		return $this->protocolo;
 	}

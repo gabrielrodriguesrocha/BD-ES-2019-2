@@ -21,6 +21,7 @@ $currProc = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
     <title>Protocolo <?php echo $_GET['protocolo'] ?></title>
 </head>
 <body>
+    <h4><a href="user.php">Voltar</a></h4>
     <h4>Procedimento de protocolo <?php echo $_GET['protocolo'] ?></h4>
     <ul>
         <li>Data/Hora: <?php echo $currProc->getDataHora()->format('Y-m-d H:i:s'); ?></li>
@@ -33,6 +34,7 @@ $currProc = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
     <tr>
       <th>Nome</th>
       <th>Valor</th>
+      <th>Resultado</th>
       <th>Restrições</th>
       <th>Competências</th>
     </tr>
@@ -42,16 +44,19 @@ $currProc = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
     <tr>
         <td><?php echo $exame->getNome(); ?></td>
         <td><?php echo $exame->getValor() ?></td>
-        <td> 
+        <td><?php echo $exame->getResultado() ?></td>
+        <td>
             <ul>
-            <?php foreach($exame->getRestricoes() as &$restricao): ?>
+            <?php if ($exame->getRestricoes())
+              foreach($exame->getRestricoes() as &$restricao): ?>
                 <li><?php echo $restricao ?></li>
             <?php endforeach; ?>
             </ul>
         </td>
         <td>
             <ul>
-            <?php foreach($exame->getCompetencias() as &$competencia): ?>
+            <?php if ($exame->getCompetencias())
+              foreach($exame->getCompetencias() as &$competencia): ?>
                 <li><?php echo $competencia ?></li>
             <?php endforeach; ?>
             </ul>
