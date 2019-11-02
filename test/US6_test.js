@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-Feature('US6 - Interface admin');
+Feature('US6 - Interface usuário');
 
 Scenario('AT1 - Verificar acesso correto à interface de usuário', (I, loginAs) => {
     //pause();
