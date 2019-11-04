@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+include('../util/splAndState.php');
+
+$state->checkAccess(true);
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -25,12 +34,12 @@
         // Montar os dados usados pelo grafico
         var dados = new google.visualization.DataTable();
         dados.addColumn('string', 'Mês');
-        dados.addColumn('number', 'Exame A');
-        dados.addColumn('number', 'Exame B');
-        dados.addColumn('number', 'Exame C');
-        dados.addColumn('number', 'Exame D');
-        dados.addColumn('number', 'Exame E');
-        dados.addColumn('number', 'Exame F');
+        dados.addColumn('number', 'Hemograma');
+        dados.addColumn('number', 'Colesterol');
+        dados.addColumn('number', 'Ureia');
+        dados.addColumn('number', 'Creatinina');
+        dados.addColumn('number', 'Glicose');
+        dados.addColumn('number', 'Urocultura');
         dados.addRows([
           ['Janeiro'    , 14,12,3,32,6,45],
           ['Fevereiro'  , 22,13,66,22,67,34],
@@ -49,8 +58,8 @@
         // Configuracoes do grafico
         var config = {
             'title':'Quantidade de exames por meses',
-            'width':1300,
-            'height':600
+            'width':1000,
+            'height':450
         };
 
         // Instanciar o objeto de geracao de graficos de pizza,
@@ -64,12 +73,12 @@
       function DesenhaTabela(){
         var dados = new google.visualization.DataTable();
         dados.addColumn('string','Mês');
-        dados.addColumn('number', 'Exame A');
-        dados.addColumn('number', 'Exame B');
-        dados.addColumn('number', 'Exame C');
-        dados.addColumn('number', 'Exame D');
-        dados.addColumn('number', 'Exame E');
-        dados.addColumn('number', 'Exame F');
+        dados.addColumn('number', 'Hemograma');
+        dados.addColumn('number', 'Colesterol');
+        dados.addColumn('number', 'Ureia');
+        dados.addColumn('number', 'Creatinina');
+        dados.addColumn('number', 'Glicose');
+        dados.addColumn('number', 'Urocultura');
         dados.addRows([
           ['Janeiro'    , 14,12,3,32,6,45],
           ['Fevereiro'  , 22,13,66,22,67,34],
@@ -97,11 +106,15 @@
     </script>
   </head>
 
-  <body>   
-    <div id="grafico"></div>
-    <fieldset id="fie" style="height: 80%; display: flex; align-items: center; justify-content: center;">
-        <legend>Quantidade de exames pelos meses</legend><br />
-        <div id="tabela"></div>
-    </fieldset>
+    <body> 
+    <?php include 'template/header.php' ?>  
+        <fieldset id="fie" style="height: 80%; align-items: center; justify-content: center;">
+            <legend>Relatório Mensal</legend><br />
+            <div id="grafico"></div><br />
+            <fieldset id="fie" style="height: 80%; display: flex; align-items: center; justify-content: center;">
+                <legend>Quantidade de exames pelos meses</legend><br />
+                <div id="tabela"></div>
+            </fieldset>
+        </fieldset>
     </body>
 </html>
