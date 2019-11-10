@@ -21,7 +21,7 @@ $userProcs = $procedimentoRepository->getByUsername($_SESSION['username']);
     <title>Meus exames</title>
 </head>
 <body>
-    <h4>Meus exames</h4>
+    <?php include 'template/header.php' ?>
     <table>
   <thead>
     <tr>
