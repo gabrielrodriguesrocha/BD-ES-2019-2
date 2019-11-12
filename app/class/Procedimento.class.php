@@ -9,7 +9,7 @@ class Procedimento {
 	private $funcionario;
 	private $valorTotal;
 
-    function __construct($protocolo, $dataHora, $local, $paciente, $exames, $funcionario, $valorTotal = 0) {
+    function __construct($protocolo, $dataHora, $local, $paciente, $exames, $funcionario) {
         $this->protocolo = $protocolo;
         $this->dataHora = $dataHora;
         $this->local = $local;
@@ -17,11 +17,6 @@ class Procedimento {
         $this->exames = $exames;
 		$this->funcionario = $funcionario;
 		$this->resultado = $resultado;
-		if (!$valorTotal) {
-			foreach ($exames as &$exame) {
-				$this->valorTotal += $exame->getValor();
-			}
-		}
     }
 
     public function getProtocolo(){
