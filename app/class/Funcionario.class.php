@@ -3,14 +3,16 @@
 class Funcionario {
     private $username;
     private $cargo;
-    private $nome;
+	private $nome;
+	private $password;
     private $telefone1;
     private $telefone2;
 
-    function __construct($username, $cargo, $nome, $telefone1, $telefone2) {
+    function __construct($username, $cargo, $nome, $password, $telefone1, $telefone2) {
         $this->username = $username;
         $this->cargo = $cargo;
-        $this->nome = $nome;
+		$this->nome = $nome;
+		$this->password = $password;
         $this->telefone1 = $telefone1;
         $this->telefone2 = $telefone2;
     }
@@ -27,8 +29,8 @@ class Funcionario {
 		return $this->nome;
 	}
 
-	public function getSenha(){
-		return $this->senha;
+	public function getPassword(){
+		return $this->password;
 	}
 
 	public function getTelefone1(){

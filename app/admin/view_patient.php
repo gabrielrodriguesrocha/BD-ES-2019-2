@@ -29,7 +29,7 @@ $paciente = $pacienteRepository->getByNome($_GET['nome']);
     <h5>Nome: </h5>
     <p><?php echo $paciente->getNome() ?></p>
     <h5>CPF:</h5>
-    <p><?php echo $paciente->getSenha(); ?></p>
+    <p><?php echo $paciente->getCPF(); ?></p>
     <h5>Endereço:</h5>
     <p><?php echo $paciente->getEndereco(); ?></p>
     <h5>Nascimento:</h5>

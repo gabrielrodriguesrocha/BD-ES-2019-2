@@ -38,6 +38,7 @@ if ($currentPage < 1) {
 <body>
     <?php include 'template/header.php' ?>
     <h4>Pacientes</h4>
+    <h5><a href="edit_patient.php">Novo paciente</a></h5>
     <form>
       <input type="text" name="searchValue">
       
@@ -57,6 +58,8 @@ if ($currentPage < 1) {
       <th>Endereço</th>
       <th>Nascimento</th>
       <th>Sexo</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -68,7 +71,8 @@ if ($currentPage < 1) {
         <td><?php echo $paciente->getEndereco() ?></td>
         <td><?php echo $paciente->getNascimento() ?></td>
         <td><?php echo $paciente->getSexo() ?></td>
-        <td> <a href="delete_patient.php?nome=<?php echo $paciente->getNome()?>" style="text-decoration: none">❌</a></td>
+        <td> <a href="edit_exam.php?username=<?php echo $exame->getUsername()?>" style="text-decoration: none">✏️</a></td>
+        <td> <a href="delete_patient.php?username=<?php echo $paciente->getUsername()?>" style="text-decoration: none">❌</a></td>
     </tr>
     <?php endforeach; ?>
   </tbody>

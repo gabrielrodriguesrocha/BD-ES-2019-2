@@ -3,7 +3,8 @@
 class Paciente {
     private $username;
     private $nome;
-    private $cpf;
+	private $cpf;
+	private $password;
     private $endereco;
     private $nascimento;
     private $sexo;
@@ -11,9 +12,10 @@ class Paciente {
     private $email2;
     private $passaporte;
 
-    function __construct($username, $nome, $cpf, $endereco, $nascimento, $sexo, $email1, $email2, $passaporte) {
+    function __construct($username, $nome, $password, $cpf, $endereco, $nascimento, $sexo, $email1, $email2, $passaporte) {
         $this->username = $username;
-        $this->nome = $nome;
+		$this->nome = $nome;
+		$this->password = $password;
         $this->cpf = $cpf;
         $this->endereco = $endereco;
         $this->nascimento = $nascimento;
@@ -31,8 +33,8 @@ class Paciente {
 		return $this->nome;
 	}
 
-	public function getSenha(){
-		return $this->senha;
+	public function getPassword(){
+		return $this->password;
 	}
 
 	public function getCpf(){
