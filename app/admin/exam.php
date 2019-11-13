@@ -2,7 +2,6 @@
 
 session_start();
 
-
 include('../util/splAndState.php');
 
 $state->checkAccess(true);
@@ -42,12 +41,12 @@ if ($currentPage < 1) {
     <h5><a href="edit_exam.php">Novo exame</a></h5>
     <form>
       <input type="text" name="searchValue">
-      <!--
+      
       <select id = "searchAttribute" name = "searchAttribute">
         <option value = "nome" name = "nome">Nome</option>
         <option value = "valor" name = "valor">Valor</option>
       </select>
-      -->
+     
       <input type="submit" value="Buscar" />
     </form>
     <table>
