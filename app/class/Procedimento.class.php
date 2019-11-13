@@ -16,7 +16,8 @@ class Procedimento {
         $this->paciente = $paciente;
         $this->exames = $exames;
 		$this->funcionario = $funcionario;
-		$this->resultado = $resultado;
+		if($exames !== NULL)
+			$this->valorTotal = $this->exames->getValor();
     }
 
     public function getProtocolo(){
@@ -28,7 +29,7 @@ class Procedimento {
 	}
 
 	public function getDataHora(){
-		return $this->dataHora;
+		return $this->dataHora->format('d-m-Y');
 	}
 
 	public function setDataHora($dataHora){
@@ -44,7 +45,7 @@ class Procedimento {
 	}
 
 	public function getPaciente(){
-		return $this->paciente;
+		return $this->paciente->getUsername();
 	}
 
 	public function setPaciente($paciente){
@@ -52,7 +53,7 @@ class Procedimento {
 	}
 
 	public function getExames(){
-		return $this->exames;
+		return $this->exames->getNome();
 	}
 
 	public function setExames($exames){
@@ -60,11 +61,19 @@ class Procedimento {
 	}
 
 	public function getFuncionario(){
-		return $this->funcionario;
+		return $this->funcionario->getNome();
 	}
 
 	public function setFuncionario($funcionario){
 		$this->funcionario = $funcionario;
+	}
+
+	public function getValorTotal(){
+		return $this->exames->getValor();
+	}
+
+	public function setValorTotal($valorTotal){
+		$this->exames->setValor($valorTotal);
 	}
 }
 

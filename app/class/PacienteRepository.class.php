@@ -100,23 +100,23 @@ class PacienteRepository {
     }
 
     public static function create($paciente) {
-        return new Paciente($paciente['username'], $paciente['nome'], $paciente['cpf'], $paciente['endereco'], $paciente['nascimento'], $paciente['sexo'], $paciente['email1'], $paciente['email2'], $paciente['passaporte']);
+        return new Paciente($paciente['username'], $paciente['nome'], $paciente['password'],$paciente['cpf'], $paciente['endereco'], $paciente['nascimento'], $paciente['sexo'], $paciente['email1'], $paciente['email2'], $paciente['passaporte']);
     }
 
-    public static function insert($paciente) {
-        $insertPacienteSql = 'DELETE FROM Paciente WHERE paciente.username = ?';
+    public static function delete($paciente) {
+        $deletePacienteSql = 'DELETE FROM Paciente WHERE paciente.username = ?';
 
         $deleteStmt = self::$conn->prepare($deletePacienteSql);
 
         $deleteStmt->execute([$username]);
     }
 
-    public static function delete($paciente) {
-        $insertPacienteSql = 'INSERT INTO Paciente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    public static function insert($paciente) {
+        $insertPacienteSql = 'INSERT INTO Paciente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         $insertStmt = self::$conn->prepare($deletePacienteSql);
 
-        $insertStmt->execute([$paciente->getUsername(), $paciente->getNome(), $paciente->getCPF(), $paciente->getEndereco(), $paciente->getNascimento(), $paciente->getSexo(), $paciente->getEmail1(), $paciente->getEmail2(), $paciente->getPassaporte()]);
+        $insertStmt->execute([$paciente->getUsername(), $paciente->getNome(), $paciente->getPassword(),$paciente->getCPF(), $paciente->getEndereco(), $paciente->getNascimento(), $paciente->getSexo(), $paciente->getEmail1(), $paciente->getEmail2(), $paciente->getPassaporte()]);
     }
 }
 ?>
