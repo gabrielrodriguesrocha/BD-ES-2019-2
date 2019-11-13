@@ -38,7 +38,6 @@ if ($currentPage < 1) {
 <body>
     <?php include 'template/header.php' ?>
     <h4>Pacientes</h4>
-    <h5><a href="edit_exam.php">Novo paciente</a></h5>
     <form>
       <input type="text" name="searchValue">
       
