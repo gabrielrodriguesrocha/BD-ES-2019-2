@@ -5,6 +5,43 @@ session_start();
 include('../util/splAndState.php');
 
 $state->checkAccess(true);
+
+$conn = pg_connect("host=postgres dbname=labd user=postgres password=123456");
+
+//not in
+$result = pg_query($conn, "select nome from exame where nome not in (
+  select exame as nome  from procedimentoexame pe, procedimento pr where pr.protocolo = pe.procedimento and pr.datahora>='2019-01-01 00:00:00' and pr.datahora<'2019-02-01 00:00:00' group by exame
+  )");
+if  (!$result) {
+  echo "query did not execute";
+}
+if (pg_num_rows($result) == 0) {
+  echo "0 records";
+}
+$resulta = array();
+$i=0;
+while ($row = pg_fetch_array($result)) {
+  $resulta[$i]["Nome"] = $row['nome'];
+  $resulta[$i]["Contagem"] = 0;
+  $i=$i+1;
+}
+//in
+$result = pg_query($conn, "select exame as nome, count(exame) as contagem  from procedimentoexame pe, procedimento pr where pr.protocolo = pe.procedimento and pr.datahora>='2019-01-01 00:00:00' and pr.datahora<'2019-02-01 00:00:00' group by exame");
+if  (!$result) {
+  echo "query did not execute";
+}
+if (pg_num_rows($result) == 0) {
+  echo "0 records";
+}
+
+while ($row = pg_fetch_array($result)) {
+  $resulta[$i]["Nome"] = $row['nome'];
+  $resulta[$i]["Contagem"] = $row['contagem'];
+  $i=$i+1;
+}
+
+array_multisort( array_column($resulta, "Nome"), SORT_ASC, $resulta );
+var_dump($resulta);
 ?>
 
 <!DOCTYPE html>

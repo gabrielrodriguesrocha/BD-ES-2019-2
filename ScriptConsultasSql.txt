@@ -1,0 +1,36 @@
+C1- Número de pessoas que realizaram determinado tipo de exame. 
+
+select pe.exame, count(pr.paciente) from procedimento pr,procedimentoexame pe  where pr.protocolo = pe.procedimento group by (pe.exame)
+
+C2- Exames que trazem as maiores entradas para o laboratório
+
+select a.contagem ,b.valor,(a.contagem*b.valor) total from ( 
+	select count (pr.procedimento) contagem from procedimentoexame pr group by (exame) order by(pr.exame)) as a,
+	(select valor from exame where nome in (select exame from procedimentoexame) order by (nome))as b order by total
+
+C3- Quantidade de Procedimentos realizados por cada funcionário
+
+select funcionario, count(procedimento) from funcionarioprocedimento group by funcionario
+
+C4- Comparação entre a quantidade de usuários por seus tipos de acesso
+
+select a.funcionario ,b.paciente from ( 
+	select count (username) funcionario from funcionario group by (username)) as a,
+	(select count (username) paciente from paciente group by (username)) as b
+
+C5- Consulta a todos os exames cadastrados.
+
+select * from exame
+
+C6- Procedimentos realizados por um paciente específico.
+
+select * from procedimento where paciente = 'bell'
+
+C7- Número diário de pacientes atendidos por exame
+
+select count(pr.paciente) from procedimento pr, procedimentoexame b where pr.protocolo = b.procedimento and pr.datahora >= '2019-05-12 00:00:00' and pr.datahora <'2019-05-13 00:00:00' group by b.exame
+
+C8- Média de exames por paciente em determinado período de tempo
+select (a.contagem/(c.pac+1)) from (
+    select count(b.exame) contagem from procedimento p, procedimentoexame b where p.protocolo = b.procedimento and datahora >= '2019-05-12 00:00:00' and datahora <'2019-05-13 00:00:00')as a,
+    (select count (distinct paciente) pac from procedimento where datahora >= '2019-05-12 00:00:00' and datahora <'2019-05-13 00:00:00')as c
