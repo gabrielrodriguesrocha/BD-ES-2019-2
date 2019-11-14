@@ -14,10 +14,10 @@ class ExameRepository {
     private static $examesByProcedimentoSql = 'SELECT Exame.nome, Exame.valor FROM Exame JOIN ProcedimentoExame ON Exame.nome = ProcedimentoExame.exame WHERE ProcedimentoExame.procedimento = ?';
     private static $examesByProcedimentoStmt;
 
-    private static $restricoesByExameSql = 'SELECT restricoes.restricao FROM restricoes WHERE exame.nome = ?';
+    private static $restricoesByExameSql = 'SELECT restricoes.restricao FROM restricoes WHERE restricoes.exame = ?';
     private static $restricoesByExameStmt;
 
-    private static $competenciasByExameSql = 'SELECT competencias.competencia FROM competencias WHERE exame.nome = ?';
+    private static $competenciasByExameSql = 'SELECT competencias.competencia FROM competencias WHERE competencias.exame = ?';
     private static $competenciasByExameStmt;
 
     private function __construct() {}
@@ -78,11 +78,13 @@ class ExameRepository {
         if ($getRestricoes) {
             self::$restricoesByExameStmt->execute([$exame['nome']]);
             $restricoes = self::$restricoesByExameStmt->fetchAll();
+            $restricoes = array_map(function ($e) { return $e['restricao']; }, $restricoes);
         }
 
         if ($getCompetencias) {
             self::$competenciasByExameStmt->execute([$exame['nome']]);
             $competencias = self::$competenciasByExameStmt->fetchAll();
+            $competencias = array_map(function ($e) { return $e['competencia']; }, $competencias);
         }
 
         return new Exame($exame['nome'], $exame['valor'], $restricoes, $competencias);
@@ -116,7 +118,7 @@ class ExameRepository {
         self::insert($exame);
     }
 
-    public static function delete($nome) {
+    public static function delete($exame) {
         $deleteExameSql = 'DELETE FROM Exame WHERE Exame.nome = ?';
         $deleteRestricoesSql = 'DELETE FROM Restricoes WHERE Restricoes.exame = ?';
         $deleteCompetenciasSql = 'DELETE FROM Competencias WHERE Competencias.exame = ?';
@@ -127,9 +129,9 @@ class ExameRepository {
 
         //THIS HAS TO BE TRANSACTIONAL!
         self::$conn->beginTransaction();
-        $deleteRestricoesStmt->execute([$nome]);
-        $deleteCompetenciasStmt->execute([$nome]);
-        $deleteStmt->execute([$nome]);
+        $deleteRestricoesStmt->execute([$exame->getNome()]);
+        $deleteCompetenciasStmt->execute([$exame->getNome()]);
+        $deleteStmt->execute([$exame->getNome()]);
         self::$conn->commit();
     }
 }

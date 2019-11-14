@@ -22,7 +22,7 @@ class Exame {
 	}
 
 	public function getValor(){
-		return $this->valor;
+		return trim($this->valor, '$');
 	}
 
 	public function setValor($valor){

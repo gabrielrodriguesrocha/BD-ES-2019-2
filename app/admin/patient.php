@@ -65,13 +65,13 @@ if ($currentPage < 1) {
   <tbody>
     <?php foreach($pacientes as &$paciente): ?>
     <tr>
-        <td><a href="view_patient.php?nome=<?php echo $paciente->getUsername(); ?>"><?php echo $paciente->getUsername(); ?></a></td>
-        <td><?php echo $paciente->getNome() ?></td>
-        <td><?php echo $paciente->getCpf() ?></td>
-        <td><?php echo $paciente->getEndereco() ?></td>
-        <td><?php echo $paciente->getNascimento() ?></td>
-        <td><?php echo $paciente->getSexo() ?></td>
-        <td> <a href="edit_exam.php?username=<?php echo $exame->getUsername()?>" style="text-decoration: none">✏️</a></td>
+        <td><a href="view_patient.php?username=<?php echo $paciente->getUsername(); ?>"><?php echo $paciente->getUsername(); ?></a></td>
+        <td><?php echo $paciente->getNome(); ?></td>
+        <td><?php echo $paciente->getCpf(); ?></td>
+        <td><?php echo $paciente->getEndereco(); ?></td>
+        <td><?php echo $paciente->getNascimento(); ?></td>
+        <td><?php echo $paciente->getSexo(); ?></td>
+        <td> <a href="edit_patient.php?username=<?php echo $paciente->getUsername()?>" style="text-decoration: none">✏️</a></td>
         <td> <a href="delete_patient.php?username=<?php echo $paciente->getUsername()?>" style="text-decoration: none">❌</a></td>
     </tr>
     <?php endforeach; ?>

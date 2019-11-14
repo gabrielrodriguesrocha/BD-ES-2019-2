@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else {
         $exameRepository->insert($exame);
     }
+    header('location:edit_exam.php?nome='.$exame->getNome());
 }
 ?>
 
@@ -43,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Nome: </label>
         <input type="text" name="nome" id="nome" value="<?php echo $exame->getNome();?>"/><br/>
         <label>Valor:</label>
-        <input type="number" name="valor" id="valor" value="<?php echo $exame->getValor();?>"/><br/>
+        <input type="number" step="any" name="valor" id="valor" value="<?php echo $exame->getValor();?>"/><br/>
         <label>Restrições:</label>
         <input type="text" name="restricoes" id="restricoes" value="<?php foreach ($exame->getRestricoes() as &$restricao) { echo $restricao.';'; } ?>"/><br/>
         <label>Competências:</label>

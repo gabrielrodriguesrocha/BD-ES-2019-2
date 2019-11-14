@@ -8,8 +8,8 @@ class PacienteRepository {
     private static $pacientesSql = 'SELECT * FROM Paciente ORDER BY ? LIMIT ? OFFSET ?';
     private static $pacientesStmt;
 
-    private static $pacientesByUserSql = 'SELECT * FROM Paciente WHERE username = ?';
-    private static $pacientesByUserStmt;
+    private static $pacienteByUsernameSql = 'SELECT * FROM Paciente WHERE username = ?';
+    private static $pacienteByUsernameStmt;
 
     private static $pacientesByNomeSql = 'SELECT * FROM Paciente WHERE nome = ?';
     private static $pacientesByNomeStmt;
@@ -50,7 +50,7 @@ class PacienteRepository {
         if (!isset(self::$instance)) {
             self::$conn = Connection::getInstance();
             self::$pacientesStmt = self::$conn->prepare(self::$pacientesSql);
-            self::$pacientesByUserStmt = self::$conn->prepare(self::$pacientesByUserSql);
+            self::$pacienteByUsernameStmt = self::$conn->prepare(self::$pacienteByUsernameSql);
             self::$pacientesByNomeStmt = self::$conn->prepare(self::$pacientesByNomeSql);
             self::$pacientesByPasswordStmt = self::$conn->prepare(self::$pacientesByPasswordSql);
             self::$pacienteByCPFStmt = self::$conn->prepare(self::$pacienteByCPFSql);
@@ -94,13 +94,13 @@ class PacienteRepository {
     }
 
     public static function getByUsername($username) {
-        self::$pacienteByCPFStmt->execute([$orderBy, $limit, $offset]);
-        $paciente = self::$pacienteByCPFStmt->fetch();
+        self::$pacienteByUsernameStmt->execute([$username]);
+        $paciente = self::$pacienteByUsernameStmt->fetch();
         return self::create($paciente);
     }
 
     public static function create($paciente) {
-        return new Paciente($paciente['username'], $paciente['nome'], $paciente['password'],$paciente['cpf'], $paciente['endereco'], $paciente['nascimento'], $paciente['sexo'], $paciente['email1'], $paciente['email2'], $paciente['passaporte']);
+        return new Paciente($paciente['username'], $paciente['nome'], $paciente['password'],$paciente['cpf'], $paciente['endereco'], $paciente['nascimento'], $paciente['sexo'], $paciente['email1'], $paciente['email2'], $paciente['telefone1'], $paciente['telefone2'], $paciente['passaporte']);
     }
 
     public static function delete($paciente) {
@@ -108,15 +108,23 @@ class PacienteRepository {
 
         $deleteStmt = self::$conn->prepare($deletePacienteSql);
 
-        $deleteStmt->execute([$username]);
+        $deleteStmt->execute([$paciente->getUsername()]);
     }
 
     public static function insert($paciente) {
-        $insertPacienteSql = 'INSERT INTO Paciente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $insertPacienteSql = 'INSERT INTO Paciente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-        $insertStmt = self::$conn->prepare($deletePacienteSql);
+        $insertStmt = self::$conn->prepare($insertPacienteSql);
 
-        $insertStmt->execute([$paciente->getUsername(), $paciente->getNome(), $paciente->getPassword(),$paciente->getCPF(), $paciente->getEndereco(), $paciente->getNascimento(), $paciente->getSexo(), $paciente->getEmail1(), $paciente->getEmail2(), $paciente->getPassaporte()]);
+        $insertStmt->execute([$paciente->getUsername(), $paciente->getNome(), $paciente->getPassword(),$paciente->getCpf(), $paciente->getEndereco(), $paciente->getNascimento(), $paciente->getSexo(), $paciente->getEmail1(), $paciente->getEmail2(), $paciente->getTelefone1(), $paciente->getTelefone2(), $paciente->getPassaporte()]);
+    }
+
+    public static function update($paciente) {
+        $updatePacienteSql = 'UPDATE Paciente SET nome = ?, password = ?, cpf = ?, endereco = ?, nascimento = ?, sexo = ?, email1 = ?, email2 = ?, telefone1 = ?, telefone2 = ?, passaporte = ? WHERE username = ?';
+
+        $updateStmt = self::$conn->prepare($updatePacienteSql);
+
+        $updateStmt->execute([$paciente->getNome(), $paciente->getPassword(),$paciente->getCpf(), $paciente->getEndereco(), $paciente->getNascimento(), $paciente->getSexo(), $paciente->getEmail1(), $paciente->getEmail2(), $paciente->getTelefone1(), $paciente->getTelefone2(), $paciente->getPassaporte(), $paciente->getUsername()]);
     }
 }
 ?>

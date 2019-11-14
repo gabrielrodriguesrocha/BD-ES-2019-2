@@ -9,10 +9,12 @@ class Paciente {
     private $nascimento;
     private $sexo;
     private $email1;
-    private $email2;
+	private $email2;
+	private $telefone1;
+    private $telefone2;
     private $passaporte;
 
-    function __construct($username, $nome, $password, $cpf, $endereco, $nascimento, $sexo, $email1, $email2, $passaporte) {
+    function __construct($username, $nome, $password, $cpf, $endereco, $nascimento, $sexo, $email1, $email2, $telefone1, $telefone2, $passaporte) {
         $this->username = $username;
 		$this->nome = $nome;
 		$this->password = $password;
@@ -21,7 +23,9 @@ class Paciente {
         $this->nascimento = $nascimento;
         $this->sexo = $sexo;
         $this->email1 = $email1;
-        $this->email2 = $email2;
+		$this->email2 = $email2;
+		$this->telefone1 = $telefone1;
+        $this->telefone2 = $telefone2;
         $this->passaporte = $passaporte;
     }
 
@@ -59,6 +63,14 @@ class Paciente {
 
 	public function getEmail2(){
 		return $this->email2;
+	}
+
+	public function getTelefone1(){
+		return $this->telefone1;
+	}
+
+	public function getTelefone2(){
+		return $this->telefone2;
 	}
 
 	public function getPassaporte(){
