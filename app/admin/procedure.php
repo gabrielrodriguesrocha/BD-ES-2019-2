@@ -11,16 +11,14 @@ $ProcedimentoRepository = ProcedimentoRepository::getInstance();
 
 include('template/pagination_header.php');
 
-if (isset($_GET['searchValue'])) {
-    if ($_GET['searchAttribute'] == 'protocolo') {
-        $procedimentos = array($ProcedimentoRepository->getByProtocolo($_GET['searchValue']));
-    }
-    else {
-        $procedimentos = array($ProcedimentoRepository->getByUsername($_GET['searchValue']));
-    }
-}
-else
-  $procedimentos = $ProcedimentoRepository->getAll($limit, $offset);
+$procedimentos = array();
+
+if (isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'protocolo') 
+    $procedimentos = $ProcedimentoRepository->getByProtocolo($_GET['searchValue']);
+else if(isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'paciente')   
+    $procedimentos = $ProcedimentoRepository->getByPaciente($_GET['searchValue']);
+else if(isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'selecione')
+    $procedimentos = $ProcedimentoRepository->getAll($limit, $offset);
 
 $pageCount = ceil (count($procedimentos) / $limit);
 if ($currentPage > $pageCount) {
@@ -44,11 +42,13 @@ if ($currentPage < 1) {
 <body>
     <?php include 'template/header.php' ?>
     <h4>Procedimentos</h4>
+    <h5><a href="edit_procedure.php">Novo procedimento</a></h5>
     <form>
       <input type="text" name="searchValue">
       
       <select id = "searchAttribute" name = "searchAttribute">
-        <option value = "nome" name = "nome">Nome</option>
+        <option value = "selecione" name = "selecione">Selecione</option>
+        <option value = "paciente" name = "username">Paciente</option>
         <option value = "protocolo" name = "nome">Protocolo</option>
       </select>
      
@@ -64,6 +64,7 @@ if ($currentPage < 1) {
                 <th>Exames</th>
                 <th>Funcionario</th>
                 <th>Valor Total</th>
+                <th>Resultado</th>
                 <th></th>
             </tr>
         </thead>
@@ -77,6 +78,7 @@ if ($currentPage < 1) {
                 <td><?php echo $procedimento->getExames() ?></td>
                 <td><?php echo $procedimento->getFuncionario() ?></td>
                 <td><?php echo $procedimento->getValorTotal() ?></td>
+                <td><?php echo $procedimento->getResultado() ?></td>
                 <td> <a href="delete_procedure.php?protocolo=<?php echo $procedimento->getProtocolo()?>" style="text-decoration: none">❌</a></td>
             </tr>
             <?php endforeach; ?>

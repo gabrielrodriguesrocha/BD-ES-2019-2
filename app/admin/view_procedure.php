@@ -9,7 +9,9 @@ $state->checkAccess(true);
 
 $procedimentoRepository = ProcedimentoRepository::getInstance();
 
-$procedimento = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
+$procedimentos = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
+
+$procedimento = $procedimentos[0];
 ?>
 
 

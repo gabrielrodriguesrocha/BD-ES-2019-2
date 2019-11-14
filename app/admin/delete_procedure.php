@@ -14,7 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('location:/admin/procedure.php');
 }
 else {
-    $procedimento = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
+    $procedimentos = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
+
+    $procedimento = $procedimentos[0];
 }
 ?>
 
