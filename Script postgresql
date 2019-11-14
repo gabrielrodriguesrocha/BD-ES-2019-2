@@ -41,10 +41,9 @@ CREATE TABLE FuncionarioProcedimento(
 	procedimento varchar (30) references procedimento(protocolo),
 	Primary Key(funcionario,procedimento)
 );
-
 CREATE TABLE Exame(
 	nome varchar (60) not null PRIMARY KEY,
-	valor money not null
+	valor money not null check (valor >= '0.0')
 );
 
 CREATE TABLE Competencias(

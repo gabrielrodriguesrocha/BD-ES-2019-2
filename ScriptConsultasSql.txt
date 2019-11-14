@@ -31,6 +31,6 @@ C7- Número diário de pacientes atendidos por exame
 select count(pr.paciente) from procedimento pr, procedimentoexame b where pr.protocolo = b.procedimento and pr.datahora >= '2019-05-12 00:00:00' and pr.datahora <'2019-05-13 00:00:00' group by b.exame
 
 C8- Média de exames por paciente em determinado período de tempo
-select (a.contagem/(c.pac+1)) from (
+select (a.contagem/(c.pac)) from (
     select count(b.exame) contagem from procedimento p, procedimentoexame b where p.protocolo = b.procedimento and datahora >= '2019-05-12 00:00:00' and datahora <'2019-05-13 00:00:00')as a,
     (select count (distinct paciente) pac from procedimento where datahora >= '2019-05-12 00:00:00' and datahora <'2019-05-13 00:00:00')as c

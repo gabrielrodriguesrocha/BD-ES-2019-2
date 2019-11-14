@@ -3,45 +3,22 @@
 session_start();
 
 include('../util/splAndState.php');
+include('MonthlyReportService.php');
 
 $state->checkAccess(true);
+getDados(1);
+getDados(2);
+getDados(3);
+getDados(4);
+getDados(5);
+getDados(6);
+getDados(7);
+getDados(8);
+getDados(9);
+getDados(10);
+getDados(11);
+getDados(12);
 
-$conn = pg_connect("host=postgres dbname=labd user=postgres password=123456");
-
-//not in
-$result = pg_query($conn, "select nome from exame where nome not in (
-  select exame as nome  from procedimentoexame pe, procedimento pr where pr.protocolo = pe.procedimento and pr.datahora>='2019-01-01 00:00:00' and pr.datahora<'2019-02-01 00:00:00' group by exame
-  )");
-if  (!$result) {
-  echo "query did not execute";
-}
-if (pg_num_rows($result) == 0) {
-  echo "0 records";
-}
-$resulta = array();
-$i=0;
-while ($row = pg_fetch_array($result)) {
-  $resulta[$i]["Nome"] = $row['nome'];
-  $resulta[$i]["Contagem"] = 0;
-  $i=$i+1;
-}
-//in
-$result = pg_query($conn, "select exame as nome, count(exame) as contagem  from procedimentoexame pe, procedimento pr where pr.protocolo = pe.procedimento and pr.datahora>='2019-01-01 00:00:00' and pr.datahora<'2019-02-01 00:00:00' group by exame");
-if  (!$result) {
-  echo "query did not execute";
-}
-if (pg_num_rows($result) == 0) {
-  echo "0 records";
-}
-
-while ($row = pg_fetch_array($result)) {
-  $resulta[$i]["Nome"] = $row['nome'];
-  $resulta[$i]["Contagem"] = $row['contagem'];
-  $i=$i+1;
-}
-
-array_multisort( array_column($resulta, "Nome"), SORT_ASC, $resulta );
-var_dump($resulta);
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +34,35 @@ var_dump($resulta);
     <!-- Preparar a geracao do grafico -->
     <script type="text/javascript">
 
+var a = [<?php
+      $temp = getDados(1);
+      foreach ($temp as &$value) {  
+        echo "['";
+        echo $value["Nome"];
+        echo "',";
+        echo $value["Contagem"];
+        echo "],";
+      }
+    ?>];
+    vet = [];
+    
+    <?php
+      for ($i=1;$i<13;$i++)
+      {
+        $temp = getDados($i);
+        echo "var a = [";
+        foreach ($temp as &$value) { 
+          echo "['";
+          echo $value["Nome"];
+          echo "',";
+          echo $value["Contagem"];
+          echo "],";
+        }
+        echo "];vet.push("; 
+        echo "a";
+        echo ");";
+      }
+    ?>
       // Carregar a API de visualizacao e os pacotes necessarios.
       google.charts.load('current', {'packages':['line']});
       google.charts.load('current', {'packages':['table']});
@@ -64,33 +70,71 @@ var_dump($resulta);
       google.setOnLoadCallback(desenharGrafico);
       google.setOnLoadCallback(DesenhaTabela);
 
-      /**
-       * Funcao que preenche os dados do grafico
-       */
-      function desenharGrafico() {
-        // Montar os dados usados pelo grafico
+    function getdados(){
         var dados = new google.visualization.DataTable();
         dados.addColumn('string', 'Mês');
-        dados.addColumn('number', 'Hemograma');
-        dados.addColumn('number', 'Colesterol');
-        dados.addColumn('number', 'Ureia');
-        dados.addColumn('number', 'Creatinina');
-        dados.addColumn('number', 'Glicose');
-        dados.addColumn('number', 'Urocultura');
-        dados.addRows([
-          ['Janeiro'    , 14,12,3,32,6,45],
-          ['Fevereiro'  , 22,13,66,22,67,34],
-          ['Março'      , 33,2,43,91,3,74],
-          ['Abril'      , 4,3,43,55,14,66],
-          ['Maio'       , 51,45,32,86,51,41],
-          ['Junho'      , 42,55,23,13,71,12],
-          ['Julho'      , 64,6,57,22,12,13],
-          ['Agosto'     , 44,41,28,55,12,5],
-          ['Setembro'   , 33,1,96,64,11,5],
-          ['Outubro'    , 33,11,43,75,36,26],
-          ['Novembro'   , 22,38,14,73,61,36],
-          ['Dezembro'   , 51,71,26,71,75,37]
-        ]);
+        a.forEach((item,index)=>
+        {
+            dados.addColumn('number', item[0]);
+        });
+
+        linhas = [];
+        linha=[];
+        vet.forEach((item,index)=>
+        {
+          linha=[];
+          switch(index){
+            case 1:
+              linha.push('Fevereiro');
+            break;
+            case 2:
+              linha.push('Março');
+            break;
+            case 3:
+              linha.push('Abril');
+            break;
+            case 4:
+              linha.push('Maio');
+            break;
+            case 5:
+              linha.push('Junho');
+            break;
+            case 6:
+              linha.push('Julho');
+            break;
+            case 7:
+              linha.push('Agosto');
+            break;
+            case 8:
+              linha.push('Setembro');
+            break;
+            case 9:
+              linha.push('Outubro');
+            break;
+            case 10:
+              linha.push('Novembro');
+            break;
+            case 11:
+              linha.push('Dezembro');
+            break;
+            case 0:
+              linha.push('Janeiro');
+            break;
+
+          }
+          
+          item.forEach((itemm,index)=>
+          {
+            linha.push(itemm[1]);
+          });
+          linhas.push(linha);         
+        });
+        dados.addRows(linhas);
+        return dados;
+    }
+      function desenharGrafico() {
+        // Montar os dados usados pelo grafico
+        var dados = getdados();
 
         // Configuracoes do grafico
         var config = {
@@ -107,32 +151,12 @@ var_dump($resulta);
         chart.draw(dados, config);
         
       }
+      
       function DesenhaTabela(){
-        var dados = new google.visualization.DataTable();
-        dados.addColumn('string','Mês');
-        dados.addColumn('number', 'Hemograma');
-        dados.addColumn('number', 'Colesterol');
-        dados.addColumn('number', 'Ureia');
-        dados.addColumn('number', 'Creatinina');
-        dados.addColumn('number', 'Glicose');
-        dados.addColumn('number', 'Urocultura');
-        dados.addRows([
-          ['Janeiro'    , 14,12,3,32,6,45],
-          ['Fevereiro'  , 22,13,66,22,67,34],
-          ['Março'      , 33,2,43,91,3,74],
-          ['Abril'      , 4,3,43,55,14,66],
-          ['Maio'       , 51,45,32,86,51,41],
-          ['Junho'      , 42,55,23,13,71,12],
-          ['Julho'      , 64,6,57,22,12,13],
-          ['Agosto'     , 44,41,28,55,12,5],
-          ['Setembro'   , 33,1,96,64,11,5],
-          ['Outubro'    , 33,11,43,75,36,26],
-          ['Novembro'   , 22,38,14,73,61,36],
-          ['Dezembro'   , 51,71,26,71,75,37]
-        ]);
+        var dados = getdados();
 
         var config = {
-            'width':500,
+            'width':1000,
             'height':500
         };
         var chart2 = new google.visualization.Table(document.getElementById('tabela'));
