@@ -6,18 +6,6 @@ include('../util/splAndState.php');
 include('MonthlyReportService.php');
 
 $state->checkAccess(true);
-getDados(1);
-getDados(2);
-getDados(3);
-getDados(4);
-getDados(5);
-getDados(6);
-getDados(7);
-getDados(8);
-getDados(9);
-getDados(10);
-getDados(11);
-getDados(12);
 
 ?>
 

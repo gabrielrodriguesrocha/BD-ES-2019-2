@@ -32,10 +32,10 @@ class ProcedimentoRepository {
     public static function getByUsername($username) {
         // Mock code
         if (empty($procedimentoSql)) {
-            $paciente = new Paciente('user@site.com', 'João da Silva', '12345','512.291.247-56', 'R. dos Bobos, 123', '11-09-1975', 'Masculino', 'user@site.com', null, null);
+            $paciente = new Paciente('user@site.com', 'João da Silva', '12345','512.291.247-56', 'R. dos Bobos, 123', '11-09-1975', 'Masculino', 'user@site.com', null, '11998765426',null,null);
             $exame = new Exame('HCT', 100, null, null);
             $funcionario = new Funcionario('admin@site.com', 'enfermeiro', 'José da Silva', '12345', '(326) 341-5663', '(521) 976-9767');
-            $mockProcedimento1 = new Procedimento(123, new DateTime(), 'Sorocaba', $paciente, $exame, $funcionario);
+            $mockProcedimento1 = new Procedimento(123, new DateTime(), 'Sorocaba', $paciente, $exame, $funcionario,NULL);
             return $mockProcedimento1;
         }
 
@@ -51,10 +51,10 @@ class ProcedimentoRepository {
     public static function getByProtocolo($protocolo) {
         // Mock code
         if (empty($procedimentoSql)) {
-            $paciente = new Paciente('user@site.com', 'João da Silva', '12345','512.291.247-56', 'R. dos Bobos, 123', '11-09-1975', 'Masculino', 'user@site.com', null, null);
+            $paciente = new Paciente('user@site.com', 'João da Silva', '12345','512.291.247-56', 'R. dos Bobos, 123', '11-09-1975', 'Masculino', 'user@site.com', null, '11998765426',null,null);
             $exame = new Exame('HCT', 100, null, null);
             $funcionario = new Funcionario('admin@site.com', 'enfermeiro', 'José da Silva', '12345', '(326) 341-5663', '(521) 976-9767');
-            $mockProcedimento1 = new Procedimento(123, new DateTime(), 'Sorocaba', $paciente, $exame, $funcionario);
+            $mockProcedimento1 = new Procedimento(123, new DateTime(), 'Sorocaba', $paciente, $exame, $funcionario,NULL);
             return $mockProcedimento1;
         }
 
