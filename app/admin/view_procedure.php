@@ -24,19 +24,6 @@ $procedimento = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
 <body>
     <?php include 'template/header.php' ?>
     <h4>Procedimento</h4>
-    <h5>Protocolo:</h5>
-    <p><?php echo $procedimento->getProtocolo(); ?></p>
-    <h5>Data: </h5>
-    <p><?php echo $procedimento->getDataHora() ?></p>
-    <h5>Local:</h5>
-    <p><?php echo $procedimento->getLocal(); ?></p>
-    <h5>Paciente:</h5>
-    <p><?php echo $procedimento->getPaciente(); ?></p>
-    <h5>Exames:</h5>
-    <p><?php echo $procedimento->getExames(); ?></p>
-    <h5>Funcionario:</h5>
-    <p><?php echo $procedimento->getFuncionario(); ?></p>
-    <h5>Valor Total:</h5>
-    <p><?php echo $procedimento->getValorTotal(); ?></p>
+    <?php include 'template/procedure_info.php' ?>
 </body>
 </html>

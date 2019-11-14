@@ -61,7 +61,6 @@ if ($currentPage < 1) {
                 <th>Data</th>
                 <th>Local</th>
                 <th>Paciente</th>
-                <th>Exames</th>
                 <th>Funcionario</th>
                 <th>Valor Total</th>
                 <th></th>
@@ -74,7 +73,6 @@ if ($currentPage < 1) {
                 <td><?php echo $procedimento->getDataHora() ?></td>
                 <td><?php echo $procedimento->getLocal() ?></td>
                 <td><?php echo $procedimento->getPaciente() ?></td>
-                <td><?php echo $procedimento->getExames() ?></td>
                 <td><?php echo $procedimento->getFuncionario() ?></td>
                 <td><?php echo $procedimento->getValorTotal() ?></td>
                 <td> <a href="delete_procedure.php?protocolo=<?php echo $procedimento->getProtocolo()?>" style="text-decoration: none">❌</a></td>

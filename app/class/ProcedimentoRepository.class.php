@@ -77,7 +77,7 @@ class ProcedimentoRepository {
     }
 
     public static function create($procedimento) {
-        return new Procedimento($procedimento['protocolo'], $procedimento['dataHora'], $procedimento['local'], $procedimento['paciente'], $procedimento['exames'], $procedimento['funcionario']);
+        return new Procedimento($procedimento['protocolo'], $procedimento['dataHora'], $procedimento['local'], $procedimento['paciente'], $procedimento['exames'], $procedimento['funcionario'], $procedimento['resultado']);
     }
 
     public static function delete($procedimento) {

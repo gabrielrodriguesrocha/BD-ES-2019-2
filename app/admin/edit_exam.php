@@ -15,16 +15,22 @@ else
     $exame = new Exame('', '', array(), array());
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $restricoes = explode(";", $_POST['restricoes']);
-    $competencias = explode(";", $_POST['competencias']);
-    $exame = new Exame($_POST['nome'], $_POST['valor'], $restricoes, $competencias);
-    if ($_POST['update']) {
-        $exameRepository->update($exame);
-    }
+    if (!$_POST['nome'])
+        $errorMsg = "Nome é obrigatório!";
+    else if (!$_POST['valor'])
+        $errorMsg = "Valor é obrigatório!";
     else {
-        $exameRepository->insert($exame);
+        $restricoes = explode(";", $_POST['restricoes']);
+        $competencias = explode(";", $_POST['competencias']);
+        $exame = new Exame($_POST['nome'], $_POST['valor'], $restricoes, $competencias);
+        if ($_POST['update']) {
+            $exameRepository->update($exame);
+        }
+        else {
+            $exameRepository->insert($exame);
+        }
+        header('location:edit_exam.php?nome='.$exame->getNome());
     }
-    header('location:edit_exam.php?nome='.$exame->getNome());
 }
 ?>
 
@@ -50,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Competências:</label>
         <input type="text" name="competencias" id="competencias" value="<?php foreach ($exame->getCompetencias() as &$competencia) { echo $competencia.';'; } ?>"/><br/>
         <input type="hidden" name="update" value="<?php echo isset($_GET['nome']); ?>"/>
+        <?php if (isset($errorMsg)) { echo "<span style='color:red;'>${errorMsg}</span><br>"; } ?>
         <input type="submit" value="Salvar" />
     </form>
 </body>
