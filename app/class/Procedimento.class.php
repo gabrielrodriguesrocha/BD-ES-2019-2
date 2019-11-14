@@ -7,6 +7,7 @@ class Procedimento {
     private $paciente;
     private $exames;
 	private $funcionario;
+	private $resultado;
 	private $valorTotal;
 	private $resultado;
 
@@ -17,8 +18,8 @@ class Procedimento {
         $this->paciente = $paciente;
         $this->exames = $exames;
 		$this->funcionario = $funcionario;
-		$this->resultado = $resultado;
 		$this->valorTotal = $valorTotal;
+		$this->resultado = $resultado;
     }
 
     public function getProtocolo(){
