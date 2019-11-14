@@ -1,3 +1,4 @@
+  
 INSERT INTO paciente VALUES
     ('drauzio','Gabriel Peres','AargonBestJungleBR','44332224578','rua paulo franco 142','1998-06-01','Masculino','gabriel@gmail.com',null,'119987657543',null,null);
 INSERT INTO paciente VALUES
@@ -17,13 +18,14 @@ INSERT INTO paciente VALUES
 INSERT INTO paciente VALUES
     ('highelo','Giovanna Albuquerque','AmoODrone','4138392456','avenida armando pannuzio 221','1997-06-08','Feminino','giovanna@gmail.com','gigatinha32@gmail.com','119987696943','11998765468',null);
 INSERT INTO paciente VALUES
-    ('toyquedo','Guilherme Gon�alves','MCHoje',null,'rua das capivaras 45','1996-10-04','Masculino','brinquedo@gmail.com','toy@gmail.com','11998563578','11990909769','A9054384');
+    ('toyquedo','Guilherme Go12345678
+nçalves','MCHoje',null,'rua das capivaras 45','1996-10-04','Masculino','brinquedo@gmail.com','toy@gmail.com','11998563578','11990909769','A9054384');
 INSERT INTO paciente VALUES
     ('cosi','Guilherme Cosimato','MetodoDeCosimato','44354323445','rua papa luiz 34','1998-02-20','Masculino','guilherme@gmail.com',null,'11998654399',null,null);
 INSERT INTO paciente VALUES
     ('bell','isabelle ablas','MackejadaEBreja','44267854869','rua guaipa 1583','1997-07-12','Feminino','isabelle@gmail.com',null,'11998457389','11992360872',null);
 
-insert into funcionario values
+insert into Funcionario values
 	('rocha','Dono','Gabriel Rodrigues','Breja','11996234359',null);
 insert into funcionario values
 	('gabriel','Gerente','Gabriel Peres','Senha','1199627867',null);
@@ -37,4 +39,101 @@ insert into funcionario values
 	('sujeira','Analista Senior','Lucas Occaso','SuLu95','11955621877',null);
 
 
+insert into Exame values('Hemograma', 70.00);
+insert into Exame values('Colesterol', 50.00);
+insert into Exame values('Glicose', 50.00);
+insert into Exame values('Creatina e Ureia', 75.00);
+insert into Exame values('Albumina', 100.00);
+insert into Exame values('T4 Livre e TSH', 135.00);
+insert into Exame values('Ácido úrico', 120.00);
+insert into Exame values('Urina Tipo 1', 78.97);
+insert into Exame values('Exame de Fezes', 200.12);
+insert into Exame values('Sudam III', 123.98);
 
+
+insert into Competencias values('Enfermeiro','Hemograma');
+insert into Competencias values('Enfermeiro','Colesterol');
+insert into Competencias values('Enfermeiro','Glicose');
+insert into Competencias values('Enfermeiro','Creatina e Ureia');
+insert into Competencias values('Enfermeiro','Albumina');
+insert into Competencias values('Enfermeiro','T4 Livre e TSH');
+insert into Competencias values('Enfermeiro','Ácido úrico');
+insert into Competencias values('Enfermeiro','Urina Tipo 1');
+insert into Competencias values('Enfermeiro','Exame de Fezes');
+insert into Competencias values('Enfermeiro','Sudam III');
+insert into Competencias values('Clinico Geral','Hemograma');
+insert into Competencias values('Clinico Geral','Colesterol');
+insert into Competencias values('Clinico Geral','Glicose');
+insert into Competencias values('Clinico Geral','Creatina e Ureia');
+insert into Competencias values('Clinico Geral','Albumina');
+insert into Competencias values('Endocrinologista','T4 Livre e TSH');
+insert into Competencias values('Clinico Geral','Ácido úrico');
+insert into Competencias values('Dermatologista','Ácido úrico');
+insert into Competencias values('Clinico Geral','Urina Tipo 1');
+insert into Competencias values('Clinico Geral','Exame de Fezes');
+insert into Competencias values('Clinico Geral','Sudam III');
+
+insert into Restricoes values('Jejum 10h',	'Hemograma');
+insert into Restricoes values('Não ter bebido nas últimas 24h',	'Hemograma');
+insert into Restricoes values('Não ter usado drogas nas últimas 48h',	'Hemograma');
+insert into Restricoes values('Não ter tomado Insulina nas últimas 12h',	'Colesterol');
+insert into Restricoes values('Jejum de 8h',	'Glicose');
+insert into Restricoes values('Nenhuma',	'Creatina e Ureia');
+insert into Restricoes values('Nenhuma',	'Albumina');
+insert into Restricoes values('Jejum 10h',	'T4 Livre e TSH');
+insert into Restricoes values('Não ter bebido nas últimas 24h',	'T4 Livre e TSH');
+insert into Restricoes values('Não ter usado drogas nas últimas 48h',	'T4 Livre e TSH');
+insert into Restricoes values('Nenhuma',	'Ácido úrico');
+insert into Restricoes values('Deve ser a primeira urina do dia',	'Urina Tipo 1');
+insert into Restricoes values('Devem ser as Primeiras fezes do dia',	'Exame de Fezes');
+insert into Restricoes values('Devem ser as Primeiras fezes do dia',	'Sudam III');
+
+Insert into Procedimento values('123sdf564','drauzio','2019-05-12 15:14:07','Rolândia','Vai Tuscar');
+Insert into Procedimento values('f615df1g4','hortencia','2019-05-12 15:14:07','Jandira','Vai Tuscar');
+Insert into Procedimento values('r5g46re12','leozin','2019-05-12 15:14:07','Analândia','Vai Tuscar');
+Insert into Procedimento values('2d11sa54e','drauzio','2019-06-01 12:14:07','São Paulo','Vai Tuscar');
+Insert into Procedimento values('4651ds32f','eleven','2019-05-13 06:14:07','Três Corações','Vai Tuscar');
+Insert into Procedimento values('65ew1f645','leozin','2019-04-23 05:14:07','Sorocaba','Vai Tuscar');
+Insert into Procedimento values('32f556gd1','hortencia','2019-12-09 03:14:07','Jandira','Vai Tuscar');
+Insert into Procedimento values('71632165d','leozin','2019-11-15 12:14:07','Lindóia','Vai Tuscar');
+Insert into Procedimento values('a96s5d4f6','leozin','2019-01-03 23:14:07','Rolândia','Vai Tuscar');
+Insert into Procedimento values('6r4g95t13','highelo','2019-01-17 18:14:07','Sorocaba','Vai Tuscar');
+Insert into Procedimento values('6aer56re2','bell','2019-02-18 08:14:07','Rolândia','Vai Tuscar');
+Insert into Procedimento values('r3a21v3r2','ryze','2019-09-30 05:14:07','Sorocaba','Vai Tuscar');	
+
+
+
+insert into ProcedimentoExame values ('123sdf564','Sudam III');
+insert into ProcedimentoExame values ('123sdf564','Exame de Fezes');
+insert into ProcedimentoExame values ('123sdf564','Urina Tipo 1');
+insert into ProcedimentoExame values ('f615df1g4','T4 Livre e TSH');
+insert into ProcedimentoExame values ('r5g46re12','Creatina e Ureia');
+insert into ProcedimentoExame values ('4651ds32f','T4 Livre e TSH');
+insert into ProcedimentoExame values ('2d11sa54e','Albumina');
+insert into ProcedimentoExame values ('4651ds32f','Hemograma');
+insert into ProcedimentoExame values ('65ew1f645','Hemograma');
+insert into ProcedimentoExame values ('32f556gd1','Glicose');
+insert into ProcedimentoExame values ('71632165d','Colesterol');
+insert into ProcedimentoExame values ('a96s5d4f6','Glicose');
+insert into ProcedimentoExame values ('6r4g95t13','Colesterol');
+insert into ProcedimentoExame values ('6aer56re2','T4 Livre e TSH');
+insert into ProcedimentoExame values ('6aer56re2','Hemograma');
+insert into ProcedimentoExame values ('r3a21v3r2','Ácido úrico');
+
+
+insert into FuncionarioProcedimento values ('rocha','123sdf564');
+insert into FuncionarioProcedimento values ('verinha','123sdf564');
+insert into FuncionarioProcedimento values ('gabriel','123sdf564');
+insert into FuncionarioProcedimento values ('shiko','f615df1g4');
+insert into FuncionarioProcedimento values ('verinha','r5g46re12');
+insert into FuncionarioProcedimento values ('verinha','4651ds32f');
+insert into FuncionarioProcedimento values ('pablooo','2d11sa54e');
+insert into FuncionarioProcedimento values ('rocha','4651ds32f');
+insert into FuncionarioProcedimento values ('verinha','65ew1f645');
+insert into FuncionarioProcedimento values ('rocha','32f556gd1');
+insert into FuncionarioProcedimento values ('gabriel','71632165d');
+insert into FuncionarioProcedimento values ('sujeira','a96s5d4f6');
+insert into FuncionarioProcedimento values ('sujeira','6r4g95t13');
+insert into FuncionarioProcedimento values ('shiko','6aer56re2');
+insert into FuncionarioProcedimento values ('rocha','6aer56re2');
+insert into FuncionarioProcedimento values ('sujeira','r3a21v3r2');
