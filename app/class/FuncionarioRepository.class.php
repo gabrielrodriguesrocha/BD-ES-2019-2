@@ -13,6 +13,9 @@ class FuncionarioRepository {
     private static $funcionariosByCargoSql = 'SELECT * FROM Funcionario WHERE cargo = ?';
     private static $funcionariosByCargoStmt;
 
+    private static $funcionariosByProcedimentoSql = 'SELECT username, cargo, nome, password, telefone1, telefone2 FROM Funcionario JOIN funcionarioprocedimento ON funcionarioprocedimento.funcionario = Funcionario.username WHERE funcionarioprocedimento.procedimento = ?';
+    private static $funcionariosByProcedimentoStmt;
+
     private static $funcionarioByUsernameSql = 'SELECT * FROM Funcionario WHERE username = ?';
     private static $funcionarioByUsernameStmt;
 
@@ -25,6 +28,7 @@ class FuncionarioRepository {
             self::$funcionariosByNomeStmt = self::$conn->prepare(self::$funcionariosByNomeSql);
             self::$funcionariosByCargoStmt = self::$conn->prepare(self::$funcionariosByCargoSql);
             self::$funcionarioByUsernameStmt = self::$conn->prepare(self::$funcionarioByUsernameSql);
+            self::$funcionariosByProcedimentoStmt = self::$conn->prepare(self::$funcionariosByProcedimentoSql);
             self::$instance = new FuncionarioRepository();
         }
         return self::$instance;
@@ -49,7 +53,7 @@ class FuncionarioRepository {
     }
 
     public static function getByUsername($username) {
-        self::$funcionarioByUsernameStmt->execute([$cargo]);
+        self::$funcionarioByUsernameStmt->execute([$username]);
         $funcionario = self::$funcionarioByUsernameStmt->fetch();
 
         return self::create($funcionario);
@@ -59,6 +63,15 @@ class FuncionarioRepository {
         self::$funcionariosStmt->execute([$orderBy, $limit, $offset]);
         $funcionarios = array();
         foreach (self::$funcionariosStmt->fetchAll() as &$funcionario) {
+            array_push($funcionarios, self::create($funcionario));
+        }
+        return $funcionarios;
+    }
+
+    public static function getByProcedimento($protocolo) {
+        self::$funcionariosByProcedimentoStmt->execute([$protocolo]);
+        $funcionarios = array();
+        foreach (self::$funcionariosByProcedimentoStmt->fetchAll() as &$funcionario) {
             array_push($funcionarios, self::create($funcionario));
         }
         return $funcionarios;

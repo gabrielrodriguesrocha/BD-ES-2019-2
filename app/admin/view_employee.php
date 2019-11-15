@@ -25,13 +25,6 @@ $funcionario = $funcionarioRepository->getByUsername($_GET['username']);
     <?php include 'template/header.php' ?>
     <h4>Funcionário</h4>
     <h5>Username:</h5>
-    <p><?php echo $funcionario->getUsername(); ?></p>
-    <h5>Nome: </h5>
-    <p><?php echo $funcionario->getNome(); ?></p>
-    <h5>Cargo: </h5>
-    <p><?php echo $funcionario->getCargo(); ?></p>
-    <h5>Telefones: </h5>
-    <p><?php echo $funcionario->getTelefone1(); ?></p>
-    <p><?php echo $funcionario->getTelefone2(); ?></p>
+    <?php include 'template/employee_info.php' ?>
 </body>
 </html>

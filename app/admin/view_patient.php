@@ -25,5 +25,8 @@ $paciente = $pacienteRepository->getByUsername($_GET['username']);
     <?php include 'template/header.php' ?>
     <h4>Paciente</h4>
     <?php include 'template/patient_info.php' ?>
+    <a href="edit_patient.php?username=<?php echo $paciente->getUsername()?>">✏️ Editar<a/>
+    <br/><br/>
+    <a href="delete_patient.php?username=<?php echo $paciente->getUsername()?>">❌ Excluir</a>
 </body>
 </html>

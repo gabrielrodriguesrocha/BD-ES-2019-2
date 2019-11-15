@@ -9,9 +9,23 @@ $state->checkAccess(true);
 
 $procedimentoRepository = ProcedimentoRepository::getInstance();
 
+if (!isset($_GET['protocolo'])) {
+    $procedimento = new Procedimento(null, null, null, null, null, null, null);
+} else {
+    $procedimento = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $procedimento = new Procedimento($_POST['protocolo'], $_POST['dataHora'], $_POST['local'], $_POST['paciente'], $_POST['exames'], $_POST['funcionario'],  $_POST['resultado'], $_POST['valor']);
-    $procedimentoRepository->insert($procedimento);
+    $funcionarios = explode(";", $_POST['funcionarios']);
+    $exames = explode(";", $_POST['exames']);
+    $procedimento = $procedimentoRepository->create($_POST, true, false, false);
+    if ($_POST['update']) {
+        $procedimentoRepository->update($procedimento, $exames, $funcionarios);
+    }
+    else {
+        $procedimentoRepository->insert($procedimento, $exames, $funcionarios);
+    }
+    header('location:edit_procedure.php?protocolo='.$procedimento->getProtocolo());
 }
 ?>
 
@@ -29,21 +43,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h4>Procedimento</h4>
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
         <label>Protocolo: </label>
-        <input type="text" name="protocolo" id="protocolo" value=""/><br/>
+        <input type="text" name="protocolo" id="protocolo" value="<?php echo $procedimento->getProtocolo(); ?>" <?php if (isset($_GET['protocolo'])) echo 'disabled' ?>/><br/>
         <label>Data: </label>
-        <input type="text" name="dataHora" id="dataHora" value=""/><br/>
+        <input type="text" name="datahora" id="datahora" value="<?php echo $procedimento->getDataHora(); ?>"/><br/>
         <label>Local:</label>
-        <input type="text" name="local" id="local" value=""/><br/>
+        <input type="text" name="local" id="local" value="<?php echo $procedimento->getLocal(); ?>"/><br/>
         <label>Paciente: </label>
-        <input type="text" name="paciente" id="paciente" value=""/><br/>
+        <input type="text" name="paciente" id="paciente" value="<?php echo $procedimento->getPaciente() ? $procedimento->getPaciente()->getNome() : null; ?>"/><br/>
         <label>Exames: </label>
-        <input type="text" name="exames" id="exames" value=""/><br/>
-        <label>Funcionario: </label>
-        <input type="text" name="funcionario" id="funcionario" value=""/><br/>
+        <input type="text" name="exames" id="exames" value="<?php if ($procedimento->getExames()) {foreach ($procedimento->getExames() as &$exame) { echo $exame->getNome().';'; } } ?>"/><br/>
+        <label>Funcionários: </label>
+        <input type="text" name="funcionarios" id="funcionarios" value="<?php if ($procedimento->getFuncionarios()) {foreach ($procedimento->getFuncionarios() as &$funcionario) { echo $funcionario->getUsername().';'; } } ?>"/><br/>
         <label>Resultado: </label>
-        <input type="text" name="resultado" id="resultado" value=""/><br/>
-        <label>Valor: </label>
-        <input type="text" name="valor" id="valor" value=""/><br/>
+        <input type="text" name="resultado" id="resultado" value="<?php echo $procedimento->getResultado(); ?>"/><br/>
+        <input type="hidden" name="update" value="<?php echo isset($_GET['protocolo']); ?>"/>
 
         <input type="submit" value="Salvar" />
     </form>

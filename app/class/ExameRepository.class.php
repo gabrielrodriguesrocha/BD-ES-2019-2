@@ -54,7 +54,10 @@ class ExameRepository {
             $mockExame = new Exame('HCT', 0.5, null, null);
             return array($mockExame);
         }
-        self::$examesByProcedimentoStmt->execute([$procedimento->getProtocolo()]);
+        if (is_object($procedimento)) {
+            $procedimento = $procedimento->getProtocolo();
+        }
+        self::$examesByProcedimentoStmt->execute([$procedimento]);
         $exames = array();
         foreach (self::$examesByProcedimentoStmt->fetchAll() as &$exame) {
             array_push($exames, self::create($exame));

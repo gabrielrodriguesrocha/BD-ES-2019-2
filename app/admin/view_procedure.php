@@ -9,9 +9,7 @@ $state->checkAccess(true);
 
 $procedimentoRepository = ProcedimentoRepository::getInstance();
 
-$procedimentos = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
-
-$procedimento = $procedimentos[0];
+$procedimento = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
 ?>
 
 
@@ -27,5 +25,9 @@ $procedimento = $procedimentos[0];
     <?php include 'template/header.php' ?>
     <h4>Procedimento</h4>
     <?php include 'template/procedure_info.php' ?>
+    <hr/>
+    <a href="edit_procedure.php?protocolo=<?php echo $procedimento->getProtocolo()?>">✏️ Editar<a/>
+    <br/><br/>
+    <a href="delete_procedure.php?protocolo=<?php echo $procedimento->getProtocolo()?>">❌ Excluir</a>
 </body>
 </html>

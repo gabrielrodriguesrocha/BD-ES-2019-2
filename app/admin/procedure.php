@@ -11,13 +11,11 @@ $ProcedimentoRepository = ProcedimentoRepository::getInstance();
 
 include('template/pagination_header.php');
 
-$procedimentos = array();
-
 if (isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'protocolo') 
     $procedimentos = $ProcedimentoRepository->getByProtocolo($_GET['searchValue']);
 else if(isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'paciente')   
     $procedimentos = $ProcedimentoRepository->getByPaciente($_GET['searchValue']);
-else if(isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'selecione')
+else
     $procedimentos = $ProcedimentoRepository->getAll($limit, $offset);
 
 $pageCount = ceil (count($procedimentos) / $limit);
@@ -61,9 +59,9 @@ if ($currentPage < 1) {
                 <th>Data</th>
                 <th>Local</th>
                 <th>Paciente</th>
-                <th>Funcionario</th>
                 <th>Valor Total</th>
                 <th>Resultado</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -73,10 +71,10 @@ if ($currentPage < 1) {
                 <td><a href="view_procedure.php?protocolo=<?php echo $procedimento->getProtocolo(); ?>"><?php echo $procedimento->getProtocolo(); ?></a></td>
                 <td><?php echo $procedimento->getDataHora() ?></td>
                 <td><?php echo $procedimento->getLocal() ?></td>
-                <td><?php echo $procedimento->getPaciente() ?></td>
-                <td><?php echo $procedimento->getFuncionario() ?></td>
+                <td><?php echo $procedimento->getPaciente()->getNome() ?></td>
                 <td><?php echo $procedimento->getValorTotal() ?></td>
                 <td><?php echo $procedimento->getResultado() ?></td>
+                <td> <a href="edit_procedure.php?protocolo=<?php echo $procedimento->getProtocolo()?>" style="text-decoration: none">✏️</a></td>
                 <td> <a href="delete_procedure.php?protocolo=<?php echo $procedimento->getProtocolo()?>" style="text-decoration: none">❌</a></td>
             </tr>
             <?php endforeach; ?>

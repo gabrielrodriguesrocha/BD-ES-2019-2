@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h4>Paciente</h4>
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
         <label>Username: </label>
-        <input type="text" name="username" id="username" value="<?php echo $paciente->getUsername();?>"/><br/>
+        <input type="text" name="username" id="username" value="<?php echo $paciente->getUsername();?>" <?php if (isset($_GET['username'])) echo 'disabled' ?>/> <br/>
         <label>Nome:</label>
         <input type="text" name="nome" id="nome" value="<?php echo $paciente->getNome();?>"/><br/>
         <label>CPF:</label>

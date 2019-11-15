@@ -9,22 +9,25 @@ class ProcedimentoRepository {
     private static $funcionarioRepository;
 
     private static $procedimentoStmt;
-    private static $procedimentoSql = 'SELECT * FROM exame, procedimento, procedimentoexame, funcionarioprocedimento, paciente WHERE procedimento.protocolo = procedimentoexame.procedimento AND funcionarioprocedimento.procedimento = procedimento.protocolo AND paciente.username = procedimento.paciente AND exame.nome = procedimentoexame.exame ORDER BY ? LIMIT ? OFFSET ?';
+    private static $procedimentoSql = 'SELECT * FROM procedimento ORDER BY ? LIMIT ? OFFSET ?';
 
     private static $procedimentosByPacienteStmt;
-    private static $procedimentosByPacienteSql = 'SELECT * FROM exame, procedimento, procedimentoexame, funcionarioprocedimento, paciente WHERE paciente = ? AND procedimento.protocolo = procedimentoexame.procedimento AND funcionarioprocedimento.procedimento = procedimento.protocolo AND paciente.username = procedimento.paciente AND exame.nome = procedimentoexame.exame';
+    private static $procedimentosByPacienteSql = 'SELECT * FROM procedimento WHERE paciente = ?';
 
-    private static $procedimentosByProtocoloStmt;
-    private static $procedimentosByProtocoloSql = 'SELECT * FROM exame, procedimento, procedimentoexame, funcionarioprocedimento, paciente WHERE procedimento.protocolo = ? AND procedimento.protocolo = procedimentoexame.procedimento AND funcionarioprocedimento.procedimento = procedimento.protocolo AND paciente.username = procedimento.paciente AND exame.nome = procedimentoexame.exame';
+    private static $procedimentoByProtocoloStmt;
+    private static $procedimentoByProtocoloSql = 'SELECT * FROM procedimento WHERE procedimento.protocolo = ?';
 
     private function __construct() {}
 
     public static function getInstance(){
         if (!isset(self::$instance)) {
             self::$conn = Connection::getInstance();
+            self::$funcionarioRepository = FuncionarioRepository::getInstance();
+            self::$exameRepository = ExameRepository::getInstance();
+            self::$pacienteRepository = PacienteRepository::getInstance();
             self::$procedimentoStmt = self::$conn->prepare(self::$procedimentoSql);
             self::$procedimentosByPacienteStmt = self::$conn->prepare(self::$procedimentosByPacienteSql);
-            self::$procedimentosByProtocoloStmt = self::$conn->prepare(self::$procedimentosByProtocoloSql);
+            self::$procedimentoByProtocoloStmt = self::$conn->prepare(self::$procedimentoByProtocoloSql);
             self::$instance = new ProcedimentoRepository();
         }
         return self::$instance;
@@ -59,13 +62,9 @@ class ProcedimentoRepository {
         //     return $mockProcedimento1;
         // }
 
-        self::$procedimentosByProtocoloStmt->execute([$protocolo]);
-        $procedimentos = array();
-        foreach (self::$procedimentosByProtocoloStmt->fetchAll() as &$procedimento) {
-            array_push($procedimentos, self::create($procedimento));
-        }
-
-        return $procedimentos; 
+        self::$procedimentoByProtocoloStmt->execute([$protocolo]);
+        $procedimento = self::$procedimentoByProtocoloStmt->fetch();
+        return self::create($procedimento);
     }
 
     public static function getAll($limit, $offset, $orderBy = 'paciente') {
@@ -77,44 +76,64 @@ class ProcedimentoRepository {
         return $procedimentos;
     }
 
-    public static function create($procedimento) {
-        return new Procedimento($procedimento['protocolo'], $procedimento['datahora'], $procedimento['local'], $procedimento['paciente'], $procedimento['exame'], $procedimento['funcionario'], $procedimento['resultado'], $procedimento['valor']);
+    public static function create($procedimento, $getPaciente = true, $getExames = true, $getFuncionarios = true) {
+        if($getExames) {
+            $exames = self::$exameRepository->getByProcedimento($procedimento['protocolo']);
+        }
+        if($getPaciente) {
+            $paciente = self::$pacienteRepository->getByUsername($procedimento['paciente']);
+        }
+        if($getFuncionarios) {
+            $funcionarios = self::$funcionarioRepository->getByProcedimento($procedimento['protocolo']);
+        }
+
+        if (!isset($procedimento['valor'])) {
+            $procedimento['valor'] = 0;
+        }
+
+        return new Procedimento($procedimento['protocolo'], $procedimento['datahora'], $procedimento['local'], $paciente, $exames, $funcionarios, $procedimento['resultado'], $procedimento['valor']);
     }
 
     public static function delete($protocolo) {
-        $deleteProcedimentoSql = 'DELETE FROM funcionarioprocedimento WHERE procedimento = ?; DELETE FROM procedimentoexame WHERE procedimento = ?; DELETE FROM procedimento WHERE protocolo = ?;';
+        $deleteProcedimentoFuncionarioSql = 'DELETE FROM funcionarioprocedimento WHERE procedimento = ?';
+        $deleteProcedimentoExameSql = 'DELETE FROM procedimentoexame WHERE procedimento = ?';
+        $deleteProcedimentoSql = 'DELETE FROM procedimento WHERE protocolo = ?';
 
         $deleteStmt = self::$conn->prepare($deleteProcedimentoSql);
+        $deleteExStmt = self::$conn->prepare($deleteProcedimentoExameSql);
+        $deleteFuStmt = self::$conn->prepare($deleteProcedimentoFuncionarioSql);
 
-        $deleteStmt->execute([$procedimento->getProtocolo(), $procedimento->getProtocolo(), $procedimento->getProtocolo()]);
+        self::$conn->beginTransaction();
+        $deleteExStmt->execute([$protocolo]);
+        $deleteFuStmt->execute([$protocolo]);
+        $deleteStmt->execute([$protocolo]);
+        self::$conn->commit();
     }
 
-    public static function insert($procedimento) {
-        
-        $insertAuxSql = "INSERT INTO paciente VALUES (?, ?, ?, null, null, '10-10-2019', null, ?, null, ?, null, null)";
-        $insertAuxStmt = self::$conn->prepare($insertAuxSql);
-        $insertAuxStmt->execute([$procedimento->getPaciente(), $procedimento->getPaciente(), $procedimento->getPaciente(), $procedimento->getPaciente(), $procedimento->getPaciente()]);
-        
-        $insertAuxSql = "INSERT INTO exame VALUES (?, ?)";
-        $insertAuxStmt = self::$conn->prepare($insertAuxSql);
-        $insertAuxStmt->execute([$procedimento->getExames(), $procedimento->getValorTotal()]);
-        
+    public static function insert($procedimento, $exames, $funcionarios) {
         $insertAuxSql = "INSERT INTO procedimentoexame VALUES (?, ?)";
         $insertAuxStmt = self::$conn->prepare($insertAuxSql);
-        $insertAuxStmt->execute([$procedimento->getProtocolo(), $procedimento->getExames()]);
+        foreach ($exames as &$exame) {
+            $insertAuxStmt->execute([$procedimento->getProtocolo(), $exame]);
+        }
 
-        $insertAuxSql = "INSERT INTO funcionario VALUES (?, ?, ?, ?, '11234567', null)";
-        $insertAuxStmt = self::$conn->prepare($insertAuxSql);
-        $insertAuxStmt->execute([$procedimento->getFuncionario(), $procedimento->getFuncionario(), $procedimento->getFuncionario(), $procedimento->getFuncionario()]);
-        
         $insertAuxSql = "INSERT INTO funcionarioprocedimento VALUES (?, ?)";
         $insertAuxStmt = self::$conn->prepare($insertAuxSql);
-        $insertAuxStmt->execute([$procedimento->getFuncionario(), $procedimento->getProtocolo()]);
-        
+        foreach ($funcionarios as &$funcionario) {
+            $insertAuxStmt->execute([$procedimento->getProtocolo(), $funcionario]);
+        }
+
 
         $insertProcedimentoSql = 'INSERT INTO procedimento VALUES (?, ?, ?, ?, ?)';
         $insertStmt = self::$conn->prepare($insertProcedimentoSql);
-        $insertStmt->execute([$procedimento->getProtocolo(), $procedimento->getPaciente(), $procedimento->getDataHora(),$procedimento->getLocal(), $procedimento->getResultado()]);
+        $insertStmt->execute([$procedimento->getProtocolo(), $procedimento->getPaciente()->getUsername(), $procedimento->getDataHora(),$procedimento->getLocal(), $procedimento->getResultado()]);
+    }
+
+    public static function update($procedimento, $exames, $funcionarios) {
+        self::$conn->beginTransaction();
+        self::delete($procedimento->getProtocolo());
+        self::insert($procedimento, $exames, $funcionarios);
+        self::$conn->commit();
     }
 }
 ?>

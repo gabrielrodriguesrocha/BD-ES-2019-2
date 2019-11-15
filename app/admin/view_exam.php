@@ -25,5 +25,9 @@ $exame = $exameRepository->getByNome($_GET['nome']);
     <?php include 'template/header.php' ?>
     <h4>Exame</h4>
     <?php include 'template/exam_info.php' ?>
+    <hr/>
+    <a href="edit_exam.php?nome=<?php echo $exame->getNome()?>">✏️ Editar<a/>
+    <br/><br/>
+    <a href="delete_exam.php?nome=<?php echo $exame->getNome()?>">❌ Excluir</a>
 </body>
 </html>

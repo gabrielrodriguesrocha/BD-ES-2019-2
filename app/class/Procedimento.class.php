@@ -6,19 +6,20 @@ class Procedimento {
     private $local;
     private $paciente;
     private $exames;
-	private $funcionario;
+	private $funcionarios;
 	private $resultado;
 	private $valorTotal;
-	private $resultado;
 
-    function __construct($protocolo, $dataHora, $local, $paciente, $exames, $funcionario, $resultado, $valorTotal) {
+    function __construct($protocolo, $dataHora, $local, $paciente, $exames, $funcionarios, $resultado, $valorTotal = 0) {
         $this->protocolo = $protocolo;
         $this->dataHora = $dataHora;
         $this->local = $local;
         $this->paciente = $paciente;
         $this->exames = $exames;
-		$this->funcionario = $funcionario;
-		$this->valorTotal = $valorTotal;
+		$this->funcionarios = $funcionarios;
+		if ($valorTotal == 0 && $exames) {
+			$this->valorTotal = array_reduce($exames, function ($acc, $val) { return $acc + $val->getvalor(); }, 0);
+		}
 		$this->resultado = $resultado;
     }
 
@@ -62,12 +63,12 @@ class Procedimento {
 		$this->exames = $exames;
 	}
 
-	public function getFuncionario(){
-		return $this->funcionario;
+	public function getFuncionarios(){
+		return $this->funcionarios;
 	}
 
-	public function setFuncionario($funcionario){
-		$this->funcionario = $funcionario;
+	public function setFuncionarios($funcionarios){
+		$this->funcionarios = $funcionarios;
 	}
 
 	public function getValorTotal(){
