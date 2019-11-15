@@ -3,9 +3,13 @@
 session_start();
 
 include('../util/splAndState.php');
-include('MonthlyReportService.php');
 
 $state->checkAccess(true);
+
+$monthlyReportService = MonthlyReportService::getInstance();
+
+//$temp = json_encode(array_map(function ($i) { return $monthlyReportService->getDados($i); }, range(1,12)));
+$temp = json_encode(array_map(function ($i) { return MonthlyReportService::getDados($i); }, range(1,12)));
 
 ?>
 
@@ -22,35 +26,8 @@ $state->checkAccess(true);
     <!-- Preparar a geracao do grafico -->
     <script type="text/javascript">
 
-var a = [<?php
-      $temp = getDados(1);
-      foreach ($temp as &$value) {  
-        echo "['";
-        echo $value["Nome"];
-        echo "',";
-        echo $value["Contagem"];
-        echo "],";
-      }
-    ?>];
-    vet = [];
-    
-    <?php
-      for ($i=1;$i<13;$i++)
-      {
-        $temp = getDados($i);
-        echo "var a = [";
-        foreach ($temp as &$value) { 
-          echo "['";
-          echo $value["Nome"];
-          echo "',";
-          echo $value["Contagem"];
-          echo "],";
-        }
-        echo "];vet.push("; 
-        echo "a";
-        echo ");";
-      }
-    ?>
+      vet = <?php echo $temp; ?>;
+      var a = vet[0];
       // Carregar a API de visualizacao e os pacotes necessarios.
       google.charts.load('current', {'packages':['line']});
       google.charts.load('current', {'packages':['table']});
@@ -63,7 +40,7 @@ var a = [<?php
         dados.addColumn('string', 'Mês');
         a.forEach((item,index)=>
         {
-            dados.addColumn('number', item[0]);
+            dados.addColumn('number', item['Nome']);
         });
 
         linhas = [];
@@ -110,12 +87,12 @@ var a = [<?php
             break;
 
           }
-          
+
           item.forEach((itemm,index)=>
           {
-            linha.push(itemm[1]);
+            linha.push(parseInt(itemm['Contagem']));
           });
-          linhas.push(linha);         
+          linhas.push(linha);
         });
         dados.addRows(linhas);
         return dados;
