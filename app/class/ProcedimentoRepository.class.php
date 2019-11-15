@@ -12,7 +12,7 @@ class ProcedimentoRepository {
     private static $procedimentoSql = 'SELECT * FROM procedimento ORDER BY ? LIMIT ? OFFSET ?';
 
     private static $procedimentosByPacienteStmt;
-    private static $procedimentosByPacienteSql = 'SELECT * FROM procedimento WHERE paciente = ?';
+    private static $procedimentosByPacienteSql = 'SELECT * FROM procedimento, paciente WHERE paciente.nome = ? AND paciente.username = procedimento.paciente';
 
     private static $procedimentoByProtocoloStmt;
     private static $procedimentoByProtocoloSql = 'SELECT * FROM procedimento WHERE procedimento.protocolo = ?';

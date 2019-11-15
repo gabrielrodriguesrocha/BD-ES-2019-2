@@ -179,6 +179,22 @@ Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Update)', (I, login
     I.dontSee('Henrique Shinki');
 });
 
+Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Filtro)', (I, loginAs) => {
+    //pause();
+    loginAs('admin');
+    //I.amOnPage('/index.php');
+    I.click('Funcionários');
+    I.selectOption('#searchAttribute', 'Nome');
+    I.fillField('searchValue', 'Rodrigo Kinchoko');
+    I.click('Buscar');
+    I.see('choko');
+
+    I.selectOption('#searchAttribute', 'CPF');
+    I.fillField('searchValue', '44368372630');
+    I.click('Buscar');
+    I.see('Pedro Coelho');
+});
+
 Scenario('AT1.3 - Verificar CRUD administrativa (Procedimento - Create)', (I, loginAs) => {
     //pause();
     loginAs('admin');
@@ -264,6 +280,7 @@ Scenario('AT1.3 - Verificar CRUD administrativa (Procedimentos - Delete)', (I, l
     I.click('Procedimentos');
     I.click('4651ds32f');
     I.click('❌');
+    I.click('Confirmar exclusão');
     I.amOnPage('/admin/procedure.php');
     I.dontSee('4651ds32f');
 });
@@ -281,3 +298,34 @@ Scenario('AT1.3 - Verificar CRUD administrativa (Procedimentos - Update)', (I, l
     I.click('Procedimentos');
     I.see('Sao Paulo - Morumbi');
 });
+
+Scenario('AT1.4 - Verificar Interface administrativa (Funcionarios)', (I, loginAs) => {
+    //pause();
+    loginAs('admin');
+    //I.amOnPage('/index.php');
+    I.click('Funcionários');
+    I.see('rocha');
+    I.see('verinha');
+});
+
+Scenario('AT1.4 - Verificar Interface administrativa (Funcionarios)', (I, loginAs) => {
+    //pause();
+    loginAs('admin');
+    //I.amOnPage('/index.php');
+    I.click('Funcionários');
+    I.selectOption('#searchAttribute', 'Nome');
+    I.fillField('searchValue', 'rocha');
+    I.click('Buscar');
+    I.see('Gabriel Rodrigues');
+
+    I.selectOption('#searchAttribute', 'Cargo');
+    I.fillField('searchValue', 'Gerente');
+    I.click('Buscar');
+    I.see('gabriel');
+
+    I.selectOption('#searchAttribute', 'Username');
+    I.fillField('searchValue', 'pablooo');
+    I.click('Buscar');
+    I.see('Recepcionista');
+});
+

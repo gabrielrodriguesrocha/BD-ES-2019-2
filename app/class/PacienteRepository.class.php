@@ -11,7 +11,7 @@ class PacienteRepository {
     private static $pacienteByUsernameSql = 'SELECT * FROM Paciente WHERE username = ?';
     private static $pacienteByUsernameStmt;
 
-    private static $pacientesByNomeSql = 'SELECT * FROM Paciente WHERE nome = ?';
+    private static $pacientesByNomeSql = 'SELECT * FROM paciente WHERE nome = ?';
     private static $pacientesByNomeStmt;
 
     private static $pacientesByPasswordSql = 'SELECT * FROM Paciente WHERE password = ?';
@@ -69,10 +69,10 @@ class PacienteRepository {
 
     public static function getbyNome($nome) {
         // Mock code
-        if (empty(self::$pacientesByNomeSql)) {
-            $mockPaciente = new Paciente('HCT', 0.5, null, null, null, null, null);
-            return $mockPaciente;
-        }
+        // if (empty(self::$pacientesByNomeSql)) {
+        //     $mockPaciente = new Paciente('HCT', 0.5, null, null, null, null, null);
+        //     return $mockPaciente;
+        // }
 
         self::$pacientesByNomeStmt->execute([$nome]);
         $pacientes = array();
