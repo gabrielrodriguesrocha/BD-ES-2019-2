@@ -104,11 +104,11 @@ class PacienteRepository {
     }
 
     public static function delete($paciente) {
-        $deletePacienteSql = 'DELETE FROM Paciente WHERE paciente.username = ?';
+        $deletePacienteSql = 'DELETE FROM Paciente WHERE username = ?';
 
         $deleteStmt = self::$conn->prepare($deletePacienteSql);
 
-        $deleteStmt->execute([$paciente->getUsername()]);
+        $deleteStmt->execute([$paciente]);
     }
 
     public static function insert($paciente) {

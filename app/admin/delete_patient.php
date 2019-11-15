@@ -10,7 +10,7 @@ $state->checkAccess(true);
 $pacienteRepository = PacienteRepository::getInstance();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pacienteRepository->delete($_POST['nome']);
+    $pacienteRepository->delete($_POST['username']);
     header('location:/admin/patient.php');
 }
 else {
@@ -32,7 +32,7 @@ else {
     <h4>Paciente</h4>
     <?php include 'template/patient_info.php' ?>
     <form action="<?php echo $_SERVER['PHP_SELF'];?>" method = "post">
-        <input type="hidden" name="nome" value="<?php echo $_GET['nome']; ?>"/>
+        <input type="hidden" name="username" value="<?php echo $_GET['username']; ?>"/>
         <input type="submit" value="Confirmar exclusão"/>
     </form>
 </body>
