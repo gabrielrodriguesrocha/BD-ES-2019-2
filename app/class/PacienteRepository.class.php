@@ -103,12 +103,22 @@ class PacienteRepository {
         return new Paciente($paciente['username'], $paciente['nome'], $paciente['password'],$paciente['cpf'], $paciente['endereco'], $paciente['nascimento'], $paciente['sexo'], $paciente['email1'], $paciente['email2'], $paciente['telefone1'], $paciente['telefone2'], $paciente['passaporte']);
     }
 
-    public static function delete($paciente) {
-        $deletePacienteSql = 'DELETE FROM Paciente WHERE username = ?';
-
+    public static function delete($username) {
+        $deletePacienteSql = "DELETE FROM funcionarioprocedimento USING procedimento WHERE funcionarioprocedimento.procedimento = procedimento.protocolo AND procedimento.paciente = ?;";
         $deleteStmt = self::$conn->prepare($deletePacienteSql);
+        $deleteStmt->execute([$username]);
 
-        $deleteStmt->execute([$paciente]);
+        $deletePacienteSql = "DELETE FROM procedimentoexame USING procedimento WHERE procedimentoexame.procedimento = procedimento.protocolo AND procedimento.paciente = ?;";
+        $deleteStmt = self::$conn->prepare($deletePacienteSql);
+        $deleteStmt->execute([$username]);
+
+        $deletePacienteSql = "DELETE FROM procedimento WHERE paciente = ?;";
+        $deleteStmt = self::$conn->prepare($deletePacienteSql);
+        $deleteStmt->execute([$username]);
+
+        $deletePacienteSql = "DELETE FROM Paciente WHERE username = ?";
+        $deleteStmt = self::$conn->prepare($deletePacienteSql);
+        $deleteStmt->execute([$username]);
     }
 
     public static function insert($paciente) {
