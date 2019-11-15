@@ -137,5 +137,23 @@ class ExameRepository {
         $deleteStmt->execute([$exame->getNome()]);
         self::$conn->commit();
     }
+
+    public static function validate ($exame) {
+        if (!$exame['nome'])
+            throw new Exception('Nome é obrigatório!');
+        else if (!$exame['valor'])
+            throw new Exception('Valor é obrigatório!');
+    }
+
+    public static function checkIfExists($nomes) {
+        $questionMarks = str_repeat("?,", count($nomes)-1) . "?";
+        $checkSql = "SELECT COUNT (*) FROM exame WHERE nome IN (${questionMarks});";
+        $checkStmt = self::$conn->prepare($checkSql);
+        $checkStmt->execute($nomes);
+        $count = $checkStmt->fetch()['count'];
+        if ($count != count($nomes)) {
+            throw new Exception("Algum dos exames informados não existe!");
+        }
+    }
 }
 ?>

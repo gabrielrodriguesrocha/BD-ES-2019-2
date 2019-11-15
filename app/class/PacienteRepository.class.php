@@ -136,5 +136,23 @@ class PacienteRepository {
 
         $updateStmt->execute([$paciente->getNome(), $paciente->getPassword(),$paciente->getCpf(), $paciente->getEndereco(), $paciente->getNascimento(), $paciente->getSexo(), $paciente->getEmail1(), $paciente->getEmail2(), $paciente->getTelefone1(), $paciente->getTelefone2(), $paciente->getPassaporte(), $paciente->getUsername()]);
     }
+
+    public static function validate($paciente) {
+        $obligatory = ['username', 'nome', 'cpf', 'password', 'endereco', 'nascimento', 'sexo', 'email1', 'telefone1'];
+        foreach ($obligatory as &$field) {
+            if (!$paciente[$field])
+                throw new Exception(ucfirst($field)." é obrigatório!");
+        }
+    }
+
+    public static function checkIfExists($username) {
+        $checkSql = "SELECT COUNT (*) FROM paciente WHERE username = ?;";
+        $checkStmt = self::$conn->prepare($checkSql);
+        $checkStmt->execute([$username]);
+        $count = $checkStmt->fetch()['count'];
+        if (!$count){
+            throw new Exception("Paciente informado não existe!");
+        }
+    }
 }
 ?>

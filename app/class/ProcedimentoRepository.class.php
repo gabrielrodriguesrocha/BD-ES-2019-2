@@ -135,5 +135,16 @@ class ProcedimentoRepository {
         self::insert($procedimento, $exames, $funcionarios);
         self::$conn->commit();
     }
+
+    public static function validate($procedimento, $funcionarios, $exames) {
+        $obligatory = ['protocolo', 'datahora', 'local', 'paciente', 'resultado'];
+        foreach ($obligatory as &$field) {
+            if (!$procedimento[$field])
+                throw new Exception(ucfirst($field)." é obrigatório!");
+        }
+        self::$pacienteRepository->checkIfExists($procedimento['paciente']);
+        self::$funcionarioRepository->checkIfExists($funcionarios);
+        self::$exameRepository->checkIfExists($exames);
+    }
 }
 ?>

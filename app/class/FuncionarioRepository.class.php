@@ -80,5 +80,16 @@ class FuncionarioRepository {
     public static function create($funcionario) {
         return new Funcionario($funcionario['username'], $funcionario['cargo'], $funcionario['nome'], $funcionario['password'], $funcionario['telefone1'], $funcionario['telefone2']);
     }
+
+    public static function checkIfExists($usernames) {
+        $questionMarks = str_repeat("?,", count($usernames)-1) . "?";
+        $checkSql = "SELECT COUNT (*) FROM funcionario WHERE username IN (${questionMarks});";
+        $checkStmt = self::$conn->prepare($checkSql);
+        $checkStmt->execute($usernames);
+        $count = $checkStmt->fetch()['count'];
+        if ($count != count($usernames)) {
+            throw new Exception("Algum dos funcionários informados não existe!");
+        }
+    }
 }
 ?>

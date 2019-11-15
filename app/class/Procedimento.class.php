@@ -17,7 +17,7 @@ class Procedimento {
         $this->paciente = $paciente;
         $this->exames = $exames;
 		$this->funcionarios = $funcionarios;
-		if ($valorTotal == 0 && $exames) {
+		if ($valorTotal == 0 && is_array($exames)) {
 			$this->valorTotal = array_reduce($exames, function ($acc, $val) { return $acc + $val->getvalor(); }, 0);
 		}
 		$this->resultado = $resultado;

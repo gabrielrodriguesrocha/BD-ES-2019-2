@@ -15,11 +15,8 @@ else
     $exame = new Exame('', '', array(), array());
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!$_POST['nome'])
-        $errorMsg = "Nome é obrigatório!";
-    else if (!$_POST['valor'])
-        $errorMsg = "Valor é obrigatório!";
-    else {
+    try {
+        $exameRepository->validate($_POST);
         $restricoes = explode(";", $_POST['restricoes']);
         $competencias = explode(";", $_POST['competencias']);
         $exame = new Exame($_POST['nome'], $_POST['valor'], $restricoes, $competencias);
@@ -30,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $exameRepository->insert($exame);
         }
         header('location:edit_exam.php?nome='.$exame->getNome());
+    }
+    catch (Exception $e) {
+        $errorMsg = $e->getMessage();
     }
 }
 ?>
@@ -47,9 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include 'template/header.php' ?>
     <h4>Exame</h4>
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
-        <label>Nome: </label>
+        <label>Nome*: </label>
         <input type="text" name="nome" id="nome" value="<?php echo $exame->getNome();?>" <?php if (isset($_GET['nome'])) echo 'readonly="readonly"' ?>/><br/>
-        <label>Valor:</label>
+        <label>Valor*:</label>
         <input type="number" step="any" name="valor" id="valor" value="<?php echo $exame->getValor();?>"/><br/>
         <label>Restrições:</label>
         <input type="text" name="restricoes" id="restricoes" value="<?php foreach ($exame->getRestricoes() as &$restricao) { echo $restricao.';'; } ?>"/><br/>

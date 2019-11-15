@@ -16,16 +16,22 @@ if (!isset($_GET['protocolo'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $funcionarios = explode(";", $_POST['funcionarios']);
-    $exames = explode(";", $_POST['exames']);
-    $procedimento = $procedimentoRepository->create($_POST, true, false, false);
-    if ($_POST['update']) {
-        $procedimentoRepository->update($procedimento, $exames, $funcionarios);
+    try {
+        $funcionarios = explode(";", $_POST['funcionarios']);
+        $exames = explode(";", $_POST['exames']);
+        $procedimentoRepository->validate($_POST, $funcionarios, $exames);
+        $procedimento = $procedimentoRepository->create($_POST, true, false, false);
+        if ($_POST['update']) {
+            $procedimentoRepository->update($procedimento, $exames, $funcionarios);
+        }
+        else {
+            $procedimentoRepository->insert($procedimento, $exames, $funcionarios);
+        }
+        header('location:edit_procedure.php?protocolo='.$procedimento->getProtocolo());
     }
-    else {
-        $procedimentoRepository->insert($procedimento, $exames, $funcionarios);
+    catch (Exception $e) {
+        $errorMsg = $e->getMessage();
     }
-    header('location:edit_procedure.php?protocolo='.$procedimento->getProtocolo());
 }
 ?>
 
@@ -42,22 +48,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include 'template/header.php' ?>
     <h4>Procedimento</h4>
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
-        <label>Protocolo: </label>
+        <label>Protocolo*: </label>
         <input type="text" name="protocolo" id="protocolo" value="<?php echo $procedimento->getProtocolo(); ?>" <?php if (isset($_GET['protocolo'])) echo 'readonly="readonly"' ?>/><br/>
-        <label>Data: </label>
+        <label>Data*: </label>
         <input type="text" name="datahora" id="datahora" value="<?php echo $procedimento->getDataHora(); ?>"/><br/>
-        <label>Local:</label>
+        <label>Local*:</label>
         <input type="text" name="local" id="local" value="<?php echo $procedimento->getLocal(); ?>"/><br/>
-        <label>Paciente: </label>
+        <label>Paciente*: </label>
         <input type="text" name="paciente" id="paciente" value="<?php echo $procedimento->getPaciente() ? $procedimento->getPaciente()->getNome() : null; ?>"/><br/>
-        <label>Exames: </label>
+        <label>Exames*: </label>
         <input type="text" name="exames" id="exames" value="<?php if ($procedimento->getExames()) {foreach ($procedimento->getExames() as &$exame) { echo $exame->getNome().';'; } } ?>"/><br/>
-        <label>Funcionários: </label>
+        <label>Funcionários*: </label>
         <input type="text" name="funcionarios" id="funcionarios" value="<?php if ($procedimento->getFuncionarios()) {foreach ($procedimento->getFuncionarios() as &$funcionario) { echo $funcionario->getUsername().';'; } } ?>"/><br/>
-        <label>Resultado: </label>
+        <label>Resultado*: </label>
         <input type="text" name="resultado" id="resultado" value="<?php echo $procedimento->getResultado(); ?>"/><br/>
         <input type="hidden" name="update" value="<?php echo isset($_GET['protocolo']); ?>"/>
-
+        <?php if (isset($errorMsg)) { echo "<span style='color:red;'>${errorMsg}</span><br>"; } ?>
         <input type="submit" value="Salvar" />
     </form>
 </body>
