@@ -5,8 +5,17 @@ session_start();
 include('../util/splAndState.php');
 
 $state->checkAccess(true);
-?>
 
+$periodicReportService = PeriodicReportService::getInstance();
+
+if (isset($_GET['startDate']) && isset($_GET['endDate'])) {
+    if (empty($_GET['startDate']) || empty($_GET['endDate']))
+        $msgError = "É necessário preencher ambas datas";
+    else
+        $result = $periodicReportService->getDados($_GET['startDate'], $_GET['endDate']);
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,11 +27,11 @@ $state->checkAccess(true);
 </head>
 <body>
     <?php include 'template/header.php' ?>
-    <h4>Insira o intervalo de datas desejado:</h4>
+    <h4>Relatório de média de exames por paciente</h4>
 
-    <form>
-        <label class="startDate">Entre 
-            <input type="date" name="Initial Date">
+    <form method="get">
+        <label class="startDate">Entre
+            <input type="date" name="startDate">
         </label>
 
         <fieldset class="fallbackDatePicker" hidden>
@@ -58,7 +67,7 @@ $state->checkAccess(true);
         </fieldset>
 
         <label class="endDate">e
-            <input type="date" name="Final Date">
+            <input type="date" name="endDate">
         </label>
 
         <fieldset class="fallbackDatePicker" hidden>
@@ -92,21 +101,30 @@ $state->checkAccess(true);
             <select name="year"></select>
             </label>
         </fieldset>
+        <input type="submit" value="Obter">
     </form>
 
+    <?php if (isset($msgError)) {?>
+        <span style="color: red"><?php echo $msgError; ?></span>
+    <?php } ?>
+
+    <?php if (isset($result)) { ?>
     <table style="width:30%">
+        <thead>
         <tr>
-            <th>Mes</th>
+            <th>Intervalo</th>
             <th>Media (Exames / Paciente)</th>
         </tr>
+        </thead>
+        <tbody>
         <tr>
-            <td>Abril 2019</td>
-            <td>2</td>
+            <td><?php echo $_GET['startDate']; ?> ~ <?php echo $_GET['endDate']; ?> </td>
+            <td><?php echo $result; ?></td>
         </tr>
-        <tr>
-            <td>Maio 2019</td>
-            <td>3.5 </td>
-        </tr>
-    </table> 
+        </tbody>
+    </table>
+    <?php } ?>
+
+    <button onclick="window.print();">Salvar</button>
 </body>
 </html>

@@ -17,14 +17,22 @@ class PeriodicReportService {
 
     public static function getDados ($startDateString, $endDateString) {
 
+        list ($startYear, $startDay, $startMonth) = explode ('-', $startDateString);
+        list ($endYear, $endDay, $endMonth) = explode ('-', $endDateString);
+
         $sql = "
-        select (a.contagem/(c.pac+1)) from (select count(b.exame) contagem from procedimento p, procedimentoexame b 
+        select (a.contagem/(c.pac+1)) as contagem from (select count(b.exame) contagem from procedimento p, procedimentoexame b 
             where p.protocolo = b.procedimento 
-            and datahora >= '${startDateString}' 
-            and datahora <'${endDateString}') as a, 
+            and datahora >= '${startYear}-${startMonth}-${startDay}' 
+            and datahora < '${endYear}-${endMonth}-${endDay}') as a, 
             (select count (distinct paciente) pac from procedimento 
-                where datahora >= '${startDateString}' 
-                and datahora <'${endDateString}') as c";
+                where datahora >= '${startYear}-${startMonth}-${startDay}' 
+                and datahora <'${endYear}-${endMonth}-${endDay}') as c";
+
+        $result = self::$conn->query($sql)->fetch();
+        return $result['contagem'];
+
+
     }
 }
 

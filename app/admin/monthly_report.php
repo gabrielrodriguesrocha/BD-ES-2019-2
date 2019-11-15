@@ -143,4 +143,6 @@ $temp = json_encode(array_map(function ($i) { return MonthlyReportService::getDa
             </fieldset>
         </fieldset>
     </body>
+
+    <button onclick="window.print();">Salvar</button>
 </html>
