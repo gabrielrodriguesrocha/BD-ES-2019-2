@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h4>Exame</h4>
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
         <label>Nome: </label>
-        <input type="text" name="nome" id="nome" value="<?php echo $exame->getNome();?>" <?php if (isset($_GET['nome'])) echo 'disabled' ?>/><br/>
+        <input type="text" name="nome" id="nome" value="<?php echo $exame->getNome();?>" <?php if (isset($_GET['nome'])) echo 'readonly="readonly"' ?>/><br/>
         <label>Valor:</label>
         <input type="number" step="any" name="valor" id="valor" value="<?php echo $exame->getValor();?>"/><br/>
         <label>Restrições:</label>

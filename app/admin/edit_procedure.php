@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h4>Procedimento</h4>
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
         <label>Protocolo: </label>
-        <input type="text" name="protocolo" id="protocolo" value="<?php echo $procedimento->getProtocolo(); ?>" <?php if (isset($_GET['protocolo'])) echo 'disabled' ?>/><br/>
+        <input type="text" name="protocolo" id="protocolo" value="<?php echo $procedimento->getProtocolo(); ?>" <?php if (isset($_GET['protocolo'])) echo 'readonly="readonly"' ?>/><br/>
         <label>Data: </label>
         <input type="text" name="datahora" id="datahora" value="<?php echo $procedimento->getDataHora(); ?>"/><br/>
         <label>Local:</label>
