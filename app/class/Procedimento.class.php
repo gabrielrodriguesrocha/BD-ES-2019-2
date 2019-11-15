@@ -9,17 +9,17 @@ class Procedimento {
 	private $funcionario;
 	private $resultado;
 	private $valorTotal;
+	private $resultado;
 
-    function __construct($protocolo, $dataHora, $local, $paciente, $exames, $funcionario, $resultado) {
+    function __construct($protocolo, $dataHora, $local, $paciente, $exames, $funcionario, $resultado, $valorTotal) {
         $this->protocolo = $protocolo;
         $this->dataHora = $dataHora;
         $this->local = $local;
         $this->paciente = $paciente;
         $this->exames = $exames;
 		$this->funcionario = $funcionario;
+		$this->valorTotal = $valorTotal;
 		$this->resultado = $resultado;
-		if($exames !== NULL)
-			$this->valorTotal = array_reduce($this->exames, function ($acc, $e) { $acc = $acc + $e->getValor(); return $acc; });
     }
 
     public function getProtocolo(){
@@ -31,7 +31,7 @@ class Procedimento {
 	}
 
 	public function getDataHora(){
-		return $this->dataHora->format('d-m-Y');
+		return $this->dataHora;
 	}
 
 	public function setDataHora($dataHora){
@@ -47,7 +47,7 @@ class Procedimento {
 	}
 
 	public function getPaciente(){
-		return $this->paciente->getUsername();
+		return $this->paciente;
 	}
 
 	public function setPaciente($paciente){
@@ -55,7 +55,7 @@ class Procedimento {
 	}
 
 	public function getExames(){
-		return $this->exames->getNome();
+		return $this->exames;
 	}
 
 	public function setExames($exames){
@@ -63,7 +63,7 @@ class Procedimento {
 	}
 
 	public function getFuncionario(){
-		return $this->funcionario->getNome();
+		return $this->funcionario;
 	}
 
 	public function setFuncionario($funcionario){
@@ -71,11 +71,19 @@ class Procedimento {
 	}
 
 	public function getValorTotal(){
-		return $this->exames->getValor();
+		return $this->valorTotal;
 	}
 
 	public function setValorTotal($valorTotal){
-		$this->exames->setValor($valorTotal);
+		$this->valorTotal = $valorTotal;
+	}
+		
+	public function getResultado(){
+		return $this->resultado;
+	}
+
+	public function setResultado($resultado){
+		$this->resultado = $resultado;
 	}
 }
 
