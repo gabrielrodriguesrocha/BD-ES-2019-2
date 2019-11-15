@@ -32,27 +32,25 @@ class MonthlyReportService {
 
         $mes = "pr.datahora >= '".$startDateString."' and pr.datahora<'".$endDateString."'";
 
-        $conn = pg_connect("host=postgres dbname=labd user=postgres password=123456");
-
         //not in
-        $result = pg_query($conn, "select nome from exame where nome not in (
+        $result = self::$conn->query("select nome from exame where nome not in (
         select exame as nome  from procedimentoexame pe, procedimento pr where pr.protocolo = pe.procedimento and ".$mes." group by exame
         )");
         if  (!$result) {
         echo "query did not execute";
         }
-        if (pg_num_rows($result) == 0) {
+        if ($result->rowCount() == 0) {
         echo "0 records";
         }
         $resulta = array();
         $i=0;
-        while ($row = pg_fetch_array($result)) {
+        while ($row = $result->fetch()) {
         $resulta[$i]["Nome"] = $row['nome'];
         $resulta[$i]["Contagem"] = 0;
         $i=$i+1;
         }
         //in
-        $result = pg_query($conn, "select exame as nome, count(exame) as contagem  from procedimentoexame pe, procedimento pr where pr.protocolo = pe.procedimento and ".$mes." group by exame");
+        $result = self::$conn->query("select exame as nome, count(exame) as contagem  from procedimentoexame pe, procedimento pr where pr.protocolo = pe.procedimento and ".$mes." group by exame");
         if  (!$result) {
         echo "query did not execute";
         }
@@ -60,7 +58,7 @@ class MonthlyReportService {
        // echo "0 recordsss";
         //}
 
-        while ($row = pg_fetch_array($result)) {
+        while ($row = $result->fetch()) {
         $resulta[$i]["Nome"] = $row['nome'];
         $resulta[$i]["Contagem"] = $row['contagem'];
         $i=$i+1;
