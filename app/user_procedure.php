@@ -24,9 +24,10 @@ $currProc = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
     <h4><a href="user.php">Voltar</a></h4>
     <h4>Procedimento de protocolo <?php echo $_GET['protocolo'] ?></h4>
     <ul>
-        <li>Data/Hora: <?php echo $currProc->getDataHora()->format('Y-m-d H:i:s'); ?></li>
+        <li>Data/Hora: <?php echo $currProc->getDataHora(); ?></li>
         <li>Local: <?php echo $currProc->getLocal(); ?></li>
-        <li>Funcionário: <?php echo $currProc->getFuncionario()->getNome(); ?></li>
+        <li>Funcionários: <?php foreach ($currProc->getFuncionarios() as &$funcionario) { echo $funcionario->getNome(); }?></li>
+        <li>Resultado: <?php echo $currProc->getResultado();?></li>
     </ul>
     <table>
     Exames:
@@ -34,7 +35,6 @@ $currProc = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
     <tr>
       <th>Nome</th>
       <th>Valor</th>
-      <th>Resultado</th>
       <th>Restrições</th>
       <th>Competências</th>
     </tr>
@@ -44,7 +44,6 @@ $currProc = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
     <tr>
         <td><?php echo $exame->getNome(); ?></td>
         <td><?php echo $exame->getValor() ?></td>
-        <td><?php echo $exame->getResultado() ?></td>
         <td>
             <ul>
             <?php if ($exame->getRestricoes())

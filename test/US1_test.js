@@ -314,7 +314,7 @@ Scenario('AT1.4.2 - Verificar Interface administrativa (Funcionarios)', (I, logi
     //I.amOnPage('/index.php');
     I.click('Funcionários');
     I.selectOption('#searchAttribute', 'Nome');
-    I.fillField('searchValue', 'rocha');
+    I.fillField('searchValue', 'Gabriel Rodrigues');
     I.click('Buscar');
     I.see('Gabriel Rodrigues');
 

@@ -12,7 +12,7 @@ class ProcedimentoRepository {
     private static $procedimentoSql = 'SELECT * FROM procedimento ORDER BY ? LIMIT ? OFFSET ?';
 
     private static $procedimentosByPacienteStmt;
-    private static $procedimentosByPacienteSql = 'SELECT * FROM procedimento, paciente WHERE paciente.nome = ? AND paciente.username = procedimento.paciente';
+    private static $procedimentosByPacienteSql = 'SELECT protocolo, datahora, local, resultado FROM procedimento, paciente WHERE paciente.username = ? AND paciente.username = procedimento.paciente';
 
     private static $procedimentoByProtocoloStmt;
     private static $procedimentoByProtocoloSql = 'SELECT * FROM procedimento WHERE procedimento.protocolo = ?';
@@ -46,7 +46,7 @@ class ProcedimentoRepository {
         self::$procedimentosByPacienteStmt->execute([$paciente]);
         $procedimentos = array();
         foreach (self::$procedimentosByPacienteStmt->fetchAll() as &$procedimento) {
-            array_push($procedimentos, self::create($procedimento));
+            array_push($procedimentos, self::create($procedimento, false, false, true));
         }
 
         return $procedimentos;

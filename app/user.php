@@ -28,16 +28,16 @@ $userProcs = $procedimentoRepository->getByPaciente($_SESSION['username']);
       <th>Protocolo</th>
       <th>Data/Hora</th>
       <th>Local</th>
-      <th>Funcionário resp.</th>
+      <th>Funcionários resp.</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach($userProcs as &$proc): ?>
     <tr>
         <td><a href="<?php echo "user_procedure.php?protocolo=".$proc->getProtocolo(); ?>"><?php echo $proc->getProtocolo(); ?></a></td>
-        <td><?php echo $proc->getDataHora()->format('Y-m-d H:i:s'); ?></td>
+        <td><?php echo $proc->getDataHora(); ?></td>
         <td><?php echo $proc->getLocal(); ?></td>
-        <td><?php echo $proc->getFuncionario()->getNome(); ?></td>
+        <td><?php foreach ($proc->getFuncionarios() as &$funcionario) { echo $funcionario->getNome(); }?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
