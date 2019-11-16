@@ -12,7 +12,7 @@ $ProcedimentoRepository = ProcedimentoRepository::getInstance();
 include('template/pagination_header.php');
 
 if (isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'protocolo') 
-    $procedimentos = $ProcedimentoRepository->getByProtocolo($_GET['searchValue']);
+    $procedimentos = array($ProcedimentoRepository->getByProtocolo($_GET['searchValue']));
 else if(isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'paciente')   
     $procedimentos = $ProcedimentoRepository->getByPaciente($_GET['searchValue']);
 else
