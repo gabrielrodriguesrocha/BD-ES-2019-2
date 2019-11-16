@@ -44,7 +44,7 @@ Scenario('AT1.1.1 - Verificar CRUD administrativa (Exames)', (I, loginAs) => {
     I.see('Nome é obrigatório!');
 });
 
-Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Create)', (I, loginAs) => {
+Scenario('AT1.2.1 - Verificar CRUD administrativa (Pacientes - Create)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -68,7 +68,7 @@ Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Create)', (I, login
     I.see('Henrique Kodama');
 });
 
-Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Create)', (I, loginAs) => {
+Scenario('AT1.2.2 - Verificar CRUD administrativa (Pacientes - Create)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -152,7 +152,7 @@ Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Create)', (I, login
     I.see('testUser');
 });
 
-Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Delete)', (I, loginAs) => {
+Scenario('AT1.2.3 - Verificar CRUD administrativa (Pacientes - Delete)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -164,7 +164,7 @@ Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Delete)', (I, login
     I.dontSee('hskodama');
 });
 
-Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Update)', (I, loginAs) => {
+Scenario('AT1.2.3 - Verificar CRUD administrativa (Pacientes - Update)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -179,7 +179,7 @@ Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Update)', (I, login
     I.dontSee('Henrique Shinki');
 });
 
-Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Filtro)', (I, loginAs) => {
+Scenario('AT1.2.3 - Verificar CRUD administrativa (Pacientes - Filtro)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -195,7 +195,7 @@ Scenario('AT1.2 - Verificar CRUD administrativa (Pacientes - Filtro)', (I, login
     I.see('Pedro Coelho');
 });
 
-Scenario('AT1.3 - Verificar CRUD administrativa (Procedimento - Create)', (I, loginAs) => {
+Scenario('AT1.3.1 - Verificar CRUD administrativa (Procedimento - Create)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -214,7 +214,7 @@ Scenario('AT1.3 - Verificar CRUD administrativa (Procedimento - Create)', (I, lo
     I.see('9831251');
 });
 
-Scenario('AT1.3 - Verificar CRUD administrativa (Procedimento - Create)', (I, loginAs) => {
+Scenario('AT1.3.2 - Verificar CRUD administrativa (Procedimento - Create)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -273,7 +273,7 @@ Scenario('AT1.3 - Verificar CRUD administrativa (Procedimento - Create)', (I, lo
 });
 
 
-Scenario('AT1.3 - Verificar CRUD administrativa (Procedimentos - Delete)', (I, loginAs) => {
+Scenario('AT1.3.3 - Verificar CRUD administrativa (Procedimentos - Delete)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -285,7 +285,7 @@ Scenario('AT1.3 - Verificar CRUD administrativa (Procedimentos - Delete)', (I, l
     I.dontSee('4651ds32f');
 });
 
-Scenario('AT1.3 - Verificar CRUD administrativa (Procedimentos - Update)', (I, loginAs) => {
+Scenario('AT1.3.4 - Verificar CRUD administrativa (Procedimentos - Update)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -299,7 +299,7 @@ Scenario('AT1.3 - Verificar CRUD administrativa (Procedimentos - Update)', (I, l
     I.see('Sao Paulo - Morumbi');
 });
 
-Scenario('AT1.4 - Verificar Interface administrativa (Funcionarios)', (I, loginAs) => {
+Scenario('AT1.4.1 - Verificar Interface administrativa (Funcionarios)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');
@@ -308,7 +308,7 @@ Scenario('AT1.4 - Verificar Interface administrativa (Funcionarios)', (I, loginA
     I.see('verinha');
 });
 
-Scenario('AT1.4 - Verificar Interface administrativa (Funcionarios)', (I, loginAs) => {
+Scenario('AT1.4.2 - Verificar Interface administrativa (Funcionarios)', (I, loginAs) => {
     //pause();
     loginAs('admin');
     //I.amOnPage('/index.php');

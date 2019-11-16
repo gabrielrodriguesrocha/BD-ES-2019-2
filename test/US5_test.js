@@ -2,7 +2,7 @@ const faker = require('faker');
 
 Feature('US5 - Dashboard');
 
-Scenario('AT1.1 - Verificar acesso incorreto à interface administrativa', (I) => {
+Scenario('AT5.1.1 - Verificar acesso incorreto à interface administrativa', (I) => {
     //pause();
     I.amOnPage('/index.php');
     I.see('Login');
@@ -13,7 +13,7 @@ Scenario('AT1.1 - Verificar acesso incorreto à interface administrativa', (I) =
     I.see('Usuário ou senha incorretos');
 });
 
-Scenario('AT1.2 - Verificar acesso incorreto à interface administrativa', (I) => {
+Scenario('AT5.1.1 - Verificar acesso incorreto à interface administrativa', (I) => {
     //pause();
     I.amOnPage('/index.php');
     I.see('Login');
@@ -23,7 +23,7 @@ Scenario('AT1.2 - Verificar acesso incorreto à interface administrativa', (I) =
     I.see('É necessário fornecer usuário e senha');
 });
 
-Scenario('AT2 - Verificar acesso correto à interface administrativa', (I, loginAs) => {
+Scenario('AT5.2 - Verificar acesso correto à interface administrativa', (I, loginAs) => {
     //pause();
     loginAs('admin');
     I.see('Dashboard administrativo');
