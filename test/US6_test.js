@@ -2,7 +2,7 @@ const faker = require('faker');
 
 Feature('US6 - Interface usuário');
 
-Scenario('AT1 - Verificar acesso correto à interface de usuário', (I, loginAs) => {
+Scenario('AT6.1 - Verificar acesso correto à interface de usuário', (I, loginAs) => {
     //pause();
     loginAs('user');
     //I.amOnPage('/index.php');

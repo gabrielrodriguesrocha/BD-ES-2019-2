@@ -1,28 +1,16 @@
 <?php
 
 class Exame {
-	private $id;
     private $nome;
 	private $valor;
-	private $resultado;
     private $restricoes;
 	private $competencias;
 
-    function __construct($id, $nome, $valor, $restricoes, $competencias, $resultado) {
-		$this->id = $id;
+    function __construct($nome, $valor, $restricoes, $competencias) {
         $this->nome = $nome;
 		$this->valor = $valor;
-		$this->resultado = $resultado;
 		$this->restricoes = $restricoes;
 		$this->competencias = $competencias;
-	}
-	
-	public function getId(){
-		return $this->id;
-	}
-
-	public function setId($id){
-		$this->id = $id;
 	}
 
 	public function getNome(){
@@ -34,7 +22,7 @@ class Exame {
 	}
 
 	public function getValor(){
-		return $this->valor;
+		return trim($this->valor, '$');
 	}
 
 	public function setValor($valor){
@@ -55,14 +43,6 @@ class Exame {
 
 	public function setCompetencias($competencias){
 		$this->competencias = $competencias;
-	}
-
-	public function getResultado(){
-		return $this->resultado;
-	}
-
-	public function setResultado($resultado){
-		$this->resultado = $resultado;
 	}
 }
 

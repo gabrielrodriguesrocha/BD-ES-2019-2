@@ -5,6 +5,12 @@ session_start();
 include('../util/splAndState.php');
 
 $state->checkAccess(true);
+
+$monthlyReportService = MonthlyReportService::getInstance();
+
+//$temp = json_encode(array_map(function ($i) { return $monthlyReportService->getDados($i); }, range(1,12)));
+$temp = json_encode(array_map(function ($i) { return MonthlyReportService::getDados($i); }, range(1,12)));
+
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +26,8 @@ $state->checkAccess(true);
     <!-- Preparar a geracao do grafico -->
     <script type="text/javascript">
 
+      vet = <?php echo $temp; ?>;
+      var a = vet[0];
       // Carregar a API de visualizacao e os pacotes necessarios.
       google.charts.load('current', {'packages':['line']});
       google.charts.load('current', {'packages':['table']});
@@ -27,33 +35,71 @@ $state->checkAccess(true);
       google.setOnLoadCallback(desenharGrafico);
       google.setOnLoadCallback(DesenhaTabela);
 
-      /**
-       * Funcao que preenche os dados do grafico
-       */
-      function desenharGrafico() {
-        // Montar os dados usados pelo grafico
+    function getdados(){
         var dados = new google.visualization.DataTable();
         dados.addColumn('string', 'Mês');
-        dados.addColumn('number', 'Hemograma');
-        dados.addColumn('number', 'Colesterol');
-        dados.addColumn('number', 'Ureia');
-        dados.addColumn('number', 'Creatinina');
-        dados.addColumn('number', 'Glicose');
-        dados.addColumn('number', 'Urocultura');
-        dados.addRows([
-          ['Janeiro'    , 14,12,3,32,6,45],
-          ['Fevereiro'  , 22,13,66,22,67,34],
-          ['Março'      , 33,2,43,91,3,74],
-          ['Abril'      , 4,3,43,55,14,66],
-          ['Maio'       , 51,45,32,86,51,41],
-          ['Junho'      , 42,55,23,13,71,12],
-          ['Julho'      , 64,6,57,22,12,13],
-          ['Agosto'     , 44,41,28,55,12,5],
-          ['Setembro'   , 33,1,96,64,11,5],
-          ['Outubro'    , 33,11,43,75,36,26],
-          ['Novembro'   , 22,38,14,73,61,36],
-          ['Dezembro'   , 51,71,26,71,75,37]
-        ]);
+        a.forEach((item,index)=>
+        {
+            dados.addColumn('number', item['Nome']);
+        });
+
+        linhas = [];
+        linha=[];
+        vet.forEach((item,index)=>
+        {
+          linha=[];
+          switch(index){
+            case 1:
+              linha.push('Fevereiro');
+            break;
+            case 2:
+              linha.push('Março');
+            break;
+            case 3:
+              linha.push('Abril');
+            break;
+            case 4:
+              linha.push('Maio');
+            break;
+            case 5:
+              linha.push('Junho');
+            break;
+            case 6:
+              linha.push('Julho');
+            break;
+            case 7:
+              linha.push('Agosto');
+            break;
+            case 8:
+              linha.push('Setembro');
+            break;
+            case 9:
+              linha.push('Outubro');
+            break;
+            case 10:
+              linha.push('Novembro');
+            break;
+            case 11:
+              linha.push('Dezembro');
+            break;
+            case 0:
+              linha.push('Janeiro');
+            break;
+
+          }
+
+          item.forEach((itemm,index)=>
+          {
+            linha.push(parseInt(itemm['Contagem']));
+          });
+          linhas.push(linha);
+        });
+        dados.addRows(linhas);
+        return dados;
+    }
+      function desenharGrafico() {
+        // Montar os dados usados pelo grafico
+        var dados = getdados();
 
         // Configuracoes do grafico
         var config = {
@@ -70,32 +116,12 @@ $state->checkAccess(true);
         chart.draw(dados, config);
         
       }
+      
       function DesenhaTabela(){
-        var dados = new google.visualization.DataTable();
-        dados.addColumn('string','Mês');
-        dados.addColumn('number', 'Hemograma');
-        dados.addColumn('number', 'Colesterol');
-        dados.addColumn('number', 'Ureia');
-        dados.addColumn('number', 'Creatinina');
-        dados.addColumn('number', 'Glicose');
-        dados.addColumn('number', 'Urocultura');
-        dados.addRows([
-          ['Janeiro'    , 14,12,3,32,6,45],
-          ['Fevereiro'  , 22,13,66,22,67,34],
-          ['Março'      , 33,2,43,91,3,74],
-          ['Abril'      , 4,3,43,55,14,66],
-          ['Maio'       , 51,45,32,86,51,41],
-          ['Junho'      , 42,55,23,13,71,12],
-          ['Julho'      , 64,6,57,22,12,13],
-          ['Agosto'     , 44,41,28,55,12,5],
-          ['Setembro'   , 33,1,96,64,11,5],
-          ['Outubro'    , 33,11,43,75,36,26],
-          ['Novembro'   , 22,38,14,73,61,36],
-          ['Dezembro'   , 51,71,26,71,75,37]
-        ]);
+        var dados = getdados();
 
         var config = {
-            'width':500,
+            'width':1000,
             'height':500
         };
         var chart2 = new google.visualization.Table(document.getElementById('tabela'));
@@ -117,4 +143,6 @@ $state->checkAccess(true);
             </fieldset>
         </fieldset>
     </body>
+
+    <button onclick="window.print();">Salvar</button>
 </html>
