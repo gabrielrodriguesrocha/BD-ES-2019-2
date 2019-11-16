@@ -77,6 +77,7 @@ class ProcedimentoRepository {
     }
 
     public static function create($procedimento, $getPaciente = true, $getExames = true, $getFuncionarios = true) {
+
         if($getExames) {
             $exames = self::$exameRepository->getByProcedimento($procedimento['protocolo']);
         }
@@ -136,15 +137,30 @@ class ProcedimentoRepository {
         self::$conn->commit();
     }
 
-    public static function validate($procedimento, $funcionarios, $exames) {
+    public static function validate($procedimento, $funcionarios, $exames, $update = false) {
         $obligatory = ['protocolo', 'datahora', 'local', 'paciente', 'resultado'];
         foreach ($obligatory as &$field) {
             if (!$procedimento[$field])
                 throw new Exception(ucfirst($field)." é obrigatório!");
         }
+
+        if(!$update)
+            self::checkIfDoesntExist($procedimento['protocolo']);
+
         self::$pacienteRepository->checkIfExists($procedimento['paciente']);
         self::$funcionarioRepository->checkIfExists($funcionarios);
         self::$exameRepository->checkIfExists($exames);
+    }
+
+    public static function checkIfDoesntExist($protocolo) {
+        $checkSql = "SELECT COUNT (*) FROM procedimento WHERE protocolo = ?;";
+        $checkStmt = self::$conn->prepare($checkSql);
+        $checkStmt->execute([$protocolo]);
+        $count = $checkStmt->fetch()['count'];
+        if ($count){
+            throw new Exception("Procedimento com o protocolo fornecido já existe!");
+        }
+        return true;
     }
 }
 ?>

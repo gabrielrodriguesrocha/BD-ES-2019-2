@@ -16,7 +16,7 @@ else
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        $pacienteRepository->validate($_POST);
+        $pacienteRepository->validate($_POST, $_POST['update']);
         $paciente = $pacienteRepository->create($_POST);
         if ($_POST['update']) {
             $pacienteRepository->update($paciente);

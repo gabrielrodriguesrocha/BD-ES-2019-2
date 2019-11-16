@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $funcionarios = explode(";", $_POST['funcionarios']);
         $exames = explode(";", $_POST['exames']);
-        $procedimentoRepository->validate($_POST, $funcionarios, $exames);
+        $procedimentoRepository->validate($_POST, $funcionarios, $exames, $_POST['update']);
         $procedimento = $procedimentoRepository->create($_POST, true, false, false);
         if ($_POST['update']) {
             $procedimentoRepository->update($procedimento, $exames, $funcionarios);
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Local*:</label>
         <input type="text" name="local" id="local" value="<?php echo $procedimento->getLocal(); ?>"/><br/>
         <label>Paciente*: </label>
-        <input type="text" name="paciente" id="paciente" value="<?php echo $procedimento->getPaciente() ? $procedimento->getPaciente()->getNome() : null; ?>"/><br/>
+        <input type="text" name="paciente" id="paciente" value="<?php echo $procedimento->getPaciente() ? $procedimento->getPaciente()->getUsername() : null; ?>"/><br/>
         <label>Exames*: </label>
         <input type="text" name="exames" id="exames" value="<?php if ($procedimento->getExames()) {foreach ($procedimento->getExames() as &$exame) { echo $exame->getNome().';'; } } ?>"/><br/>
         <label>Funcionários*: </label>

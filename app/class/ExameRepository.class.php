@@ -138,11 +138,15 @@ class ExameRepository {
         self::$conn->commit();
     }
 
-    public static function validate ($exame) {
+    public static function validate ($exame, $update = false) {
         if (!$exame['nome'])
             throw new Exception('Nome é obrigatório!');
         else if (!$exame['valor'])
             throw new Exception('Valor é obrigatório!');
+
+        if (!$update) {
+            self::checkIfDoesntExist($exame['nome']);
+        }
     }
 
     public static function checkIfExists($nomes) {
@@ -154,6 +158,18 @@ class ExameRepository {
         if ($count != count($nomes)) {
             throw new Exception("Algum dos exames informados não existe!");
         }
+        return true;
+    }
+
+    public static function checkIfDoesntExist($nome) {
+        $checkSql = "SELECT COUNT (*) FROM exame WHERE nome = ?";
+        $checkStmt = self::$conn->prepare($checkSql);
+        $checkStmt->execute([$nome]);
+        $count = $checkStmt->fetch()['count'];
+        if ($count) {
+            throw new Exception("Exame com nome informado já existe!");
+        }
+        return true;
     }
 }
 ?>
