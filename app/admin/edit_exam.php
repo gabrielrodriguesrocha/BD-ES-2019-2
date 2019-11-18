@@ -16,7 +16,6 @@ else
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        echo $_POST['update'];
         $exameRepository->validate($_POST, $_POST['update']);
         $restricoes = explode(";", $_POST['restricoes']);
         $competencias = explode(";", $_POST['competencias']);

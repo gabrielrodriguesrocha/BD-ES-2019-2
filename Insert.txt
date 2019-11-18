@@ -18,8 +18,7 @@ INSERT INTO paciente VALUES
 INSERT INTO paciente VALUES
     ('highelo','Giovanna Albuquerque','AmoODrone','4138392456','avenida armando pannuzio 221','1997-06-08','Feminino','giovanna@gmail.com','gigatinha32@gmail.com','119987696943','11998765468',null);
 INSERT INTO paciente VALUES
-    ('toyquedo','Guilherme Go12345678
-nçalves','MCHoje',null,'rua das capivaras 45','1996-10-04','Masculino','brinquedo@gmail.com','toy@gmail.com','11998563578','11990909769','A9054384');
+    ('toyquedo','Guilherme Gonçalves','MCHoje','47099353861','rua das capivaras 45','1996-10-04','Masculino','brinquedo@gmail.com','toy@gmail.com','11998563578','11990909769','A9054384');
 INSERT INTO paciente VALUES
     ('cosi','Guilherme Cosimato','MetodoDeCosimato','44354323445','rua papa luiz 34','1998-02-20','Masculino','guilherme@gmail.com',null,'11998654399',null,null);
 INSERT INTO paciente VALUES
