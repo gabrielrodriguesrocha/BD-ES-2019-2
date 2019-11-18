@@ -5,7 +5,8 @@ exports.config = {
     Puppeteer: {
       url: 'http://localhost',
       show: true,
-      slowMo: 100
+      slowMo: 100,
+      windowSize: "1024x768"
     }
   },
   include: {
@@ -48,6 +49,42 @@ exports.config = {
              I.see('Dashboard');
           },
         },
+        rocha: {
+          login: (I) => {
+             I.amOnPage('/');
+             I.fillField('username', 'rocha');
+             I.fillField('password', 'Breja');
+             I.click('Login');
+          },
+          check: (I) => {
+             I.amOnPage('/admin/');
+             I.see('Dashboard');
+          },
+        },
+        eleven: {
+          login: (I) => {
+             I.amOnPage('/');
+             I.fillField('username', 'leozin');
+             I.fillField('password', 'GadoMaster');
+             I.click('Login');
+          },
+          check: (I) => {
+             I.amOnPage('/user.php');
+             I.see('Meus exames');
+          },
+        },
+        drauzio: {
+          login: (I) => {
+             I.amOnPage('/');
+             I.fillField('username', 'drauzio');
+             I.fillField('password', 'AargonBestJungleBR');
+             I.click('Login');
+          },
+          check: (I) => {
+             I.amOnPage('/user.php');
+             I.see('Meus exames');
+          },
+        }
       }
     }
   },

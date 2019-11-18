@@ -26,6 +26,7 @@ if ($currentPage > $pageCount) {
 if ($currentPage < 1) {
   $currentpage = 1;
 }
+
 ?>
 
 

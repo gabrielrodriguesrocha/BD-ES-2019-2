@@ -26,7 +26,11 @@ $currProc = $procedimentoRepository->getByProtocolo($_GET['protocolo']);
     <ul>
         <li>Data/Hora: <?php echo $currProc->getDataHora(); ?></li>
         <li>Local: <?php echo $currProc->getLocal(); ?></li>
-        <li>Funcionários: <?php foreach ($currProc->getFuncionarios() as &$funcionario) { echo $funcionario->getNome(); }?></li>
+        <li>Funcionários: 
+          <ul>
+            <?php foreach ($currProc->getFuncionarios() as &$funcionario) { echo "<li>".$funcionario->getNome()."</li>"; }?>
+          </ul>
+        </li>
         <li>Resultado: <?php echo $currProc->getResultado();?></li>
     </ul>
     <table>

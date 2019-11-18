@@ -10,8 +10,10 @@ $PacienteRepository = PacienteRepository::getInstance();
 
 include('template/pagination_header.php');
 
-if (isset($_GET['searchValue']))
+if (isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'nome')
   $pacientes = array($PacienteRepository->getByNome($_GET['searchValue']));
+else if (isset($_GET['searchValue']) and $_GET['searchAttribute'] == 'cpf')
+  $pacientes = array($PacienteRepository->getByCpf($_GET['searchValue']));
 else
   $pacientes = $PacienteRepository->getAll($limit, $offset);
 
@@ -43,6 +45,7 @@ if ($currentPage < 1) {
       <input type="text" name="searchValue">
       
       <select id = "searchAttribute" name = "searchAttribute">
+        <option value="selecione" name = "selecione">Selecione</option>
         <option value = "nome" name = "nome">Nome</option>
         <option value = "cpf" name = "CPF">CPF</option>
       </select>

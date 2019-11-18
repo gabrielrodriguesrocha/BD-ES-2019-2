@@ -84,6 +84,19 @@ class PacienteRepository {
 
     }
 
+    public static function getbyCpf($cpf) {
+        // Mock code
+        // if (empty(self::$pacientesByNomeSql)) {
+        //     $mockPaciente = new Paciente('HCT', 0.5, null, null, null, null, null);
+        //     return $mockPaciente;
+        // }
+
+        self::$pacienteByCPFStmt->execute([$cpf]);
+        $paciente = self::$pacienteByCPFStmt->fetch();
+        return self::create($paciente);
+
+    }
+
     public static function getAll($limit, $offset, $orderBy = 'nome') {
         self::$pacientesStmt->execute([$orderBy, $limit, $offset]);
         $pacientes = array();

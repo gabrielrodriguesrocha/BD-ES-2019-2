@@ -37,7 +37,7 @@ $userProcs = $procedimentoRepository->getByPaciente($_SESSION['username']);
         <td><a href="<?php echo "user_procedure.php?protocolo=".$proc->getProtocolo(); ?>"><?php echo $proc->getProtocolo(); ?></a></td>
         <td><?php echo $proc->getDataHora(); ?></td>
         <td><?php echo $proc->getLocal(); ?></td>
-        <td><?php foreach ($proc->getFuncionarios() as &$funcionario) { echo $funcionario->getNome(); }?></td>
+        <td><?php foreach ($proc->getFuncionarios() as &$funcionario) { echo "<p>".$funcionario->getNome()."</p>"; }?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>

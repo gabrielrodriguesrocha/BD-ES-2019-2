@@ -112,6 +112,10 @@ class ProcedimentoRepository {
     }
 
     public static function insert($procedimento, $exames, $funcionarios) {
+        $insertProcedimentoSql = 'INSERT INTO procedimento VALUES (?, ?, ?, ?, ?)';
+        $insertStmt = self::$conn->prepare($insertProcedimentoSql);
+        $insertStmt->execute([$procedimento->getProtocolo(), $procedimento->getPaciente()->getUsername(), $procedimento->getDataHora(),$procedimento->getLocal(), $procedimento->getResultado()]);
+
         $insertAuxSql = "INSERT INTO procedimentoexame VALUES (?, ?)";
         $insertAuxStmt = self::$conn->prepare($insertAuxSql);
         foreach ($exames as &$exame) {
@@ -121,13 +125,8 @@ class ProcedimentoRepository {
         $insertAuxSql = "INSERT INTO funcionarioprocedimento VALUES (?, ?)";
         $insertAuxStmt = self::$conn->prepare($insertAuxSql);
         foreach ($funcionarios as &$funcionario) {
-            $insertAuxStmt->execute([$procedimento->getProtocolo(), $funcionario]);
+            $insertAuxStmt->execute([$funcionario, $procedimento->getProtocolo()]);
         }
-
-
-        $insertProcedimentoSql = 'INSERT INTO procedimento VALUES (?, ?, ?, ?, ?)';
-        $insertStmt = self::$conn->prepare($insertProcedimentoSql);
-        $insertStmt->execute([$procedimento->getProtocolo(), $procedimento->getPaciente()->getUsername(), $procedimento->getDataHora(),$procedimento->getLocal(), $procedimento->getResultado()]);
     }
 
     public static function update($procedimento, $exames, $funcionarios) {
